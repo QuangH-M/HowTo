@@ -1,0 +1,992 @@
+﻿<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Profile | HowTo?</title>
+    <link rel="icon" type="image/x-icon" href="./logo.png" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <script type="module">
+      import { initializeApp, getApps } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
+      import { getAuth } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-auth.js";
+      import { getFirestore } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js";
+
+      const firebaseConfig = {
+        apiKey: "AIzaSyCheSKMoXuUCQPzzKnkzj1NHMG8YXqIChY",
+        authDomain: "howto-d45bc.firebaseapp.com",
+        projectId: "howto-d45bc",
+        storageBucket: "howto-d45bc.firebasestorage.app",
+        messagingSenderId: "929511966384",
+        appId: "1:929511966384:web:3fe35c2267f4dbe779dd75",
+        measurementId: "G-9EXDTY4GB8",
+      };
+
+      let app;
+      if (getApps().length === 0) {
+        app = initializeApp(firebaseConfig);
+      } else {
+        app = getApps()[0];
+      }
+
+      window.firebaseAuth = getAuth(app);
+      window.firebaseDb = getFirestore(app);
+    </script>
+    <style>
+      :root {
+        --gold-light: #ead7b0;
+        --gold-primary: #9f7528;
+        --gold-dark: #6e5018;
+        --paper-white: #ffffff;
+        --ink-black: #2c2c2c;
+        --line-soft: #ecebe7;
+        --border-soft: #e5ddd0;
+      }
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #ecebe7;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: var(--gold-primary);
+        border-radius: 4px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: var(--gold-dark);
+      }
+      .fade-in {
+        animation: fadeIn 0.3s ease-in-out;
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      body {
+        background-color: var(--gold-light);
+        background-image: radial-gradient(var(--gold-primary) 0.5px, transparent 0.5px);
+        background-size: 20px 20px;
+        font-family: "EB Garamond", serif;
+        position: relative;
+      }
+      body::before {
+        display: none;
+      }
+      @media (min-width: 640px) {
+        body::before {
+          left: 8%;
+        }
+      }
+      @media (min-width: 1024px) {
+        body::before {
+          left: 15%;
+        }
+      }
+      .bg-white\/95,
+      .bg-white\/90,
+      .bg-white\/80,
+      .bg-white {
+        background-color: rgba(255, 255, 255, 0.94) !important;
+      }
+      .text-amber-900,
+      .text-amber-800 {
+        color: var(--gold-dark) !important;
+      }
+      .text-amber-700,
+      .text-amber-600,
+      .text-amber-500,
+      .text-amber-400 {
+        color: var(--gold-primary) !important;
+      }
+      .text-stone-900 {
+        color: var(--ink-black) !important;
+      }
+      .text-stone-800 {
+        color: #343434 !important;
+      }
+      .text-stone-700 {
+        color: #4a4a4a !important;
+      }
+      .text-stone-600,
+      .text-stone-500 {
+        color: #676767 !important;
+      }
+      .text-stone-400 {
+        color: #8b8b8b !important;
+      }
+      .bg-amber-50 {
+        background-color: var(--gold-light) !important;
+      }
+      .bg-amber-100 {
+        background-color: #f3e7cf !important;
+      }
+      .bg-amber-500 {
+        background-color: var(--gold-primary) !important;
+      }
+      .border-amber-50 {
+        border-color: #f6efe2 !important;
+      }
+      .border-amber-100 {
+        border-color: #efe5d2 !important;
+      }
+      .border-amber-200 {
+        border-color: var(--border-soft) !important;
+      }
+      .border-amber-300 {
+        border-color: #d8c4a0 !important;
+      }
+      .hover\:bg-amber-100:hover {
+        background-color: #f3e7cf !important;
+      }
+      .hover\:bg-amber-600:hover {
+        background-color: var(--gold-dark) !important;
+      }
+      .hover\:text-amber-700:hover,
+      .hover\:text-amber-600:hover {
+        color: var(--gold-dark) !important;
+      }
+      .focus\:border-amber-400:focus {
+        border-color: var(--gold-primary) !important;
+      }
+      [class*="bg-[#fffbf0]"] {
+        background-color: #fcf8ef !important;
+      }
+      nav,
+      footer,
+      main {
+        font-family: "Inter", sans-serif;
+      }
+      main {
+        background: rgba(255, 255, 255, 0.96);
+        box-shadow:
+          0 10px 30px rgba(0, 0, 0, 0.1),
+          5px 5px 0px var(--gold-dark),
+          10px 10px 0px var(--gold-primary);
+        border-radius: 4px;
+        margin-top: 2rem;
+        margin-bottom: 2.5rem;
+      }
+      .brand-wordmark {
+        font-family: "EB Garamond", serif;
+        font-size: 2rem;
+        font-weight: 800;
+        color: var(--ink-black);
+      }
+      .brand-wordmark span {
+        color: var(--gold-primary);
+      }
+      button.bg-stone-900,
+      a.bg-stone-900,
+      button.bg-amber-500,
+      a.bg-amber-500 {
+        background-color: var(--ink-black) !important;
+        color: var(--paper-white) !important;
+        border: 1px solid var(--ink-black) !important;
+        transition: all 0.3s ease !important;
+      }
+      button.bg-stone-900:hover,
+      a.bg-stone-900:hover,
+      button.bg-amber-500:hover,
+      a.bg-amber-500:hover {
+        background-color: var(--gold-primary) !important;
+        border-color: var(--gold-primary) !important;
+        transform: translateY(-2px);
+      }
+      button.bg-stone-50,
+      a.bg-stone-50,
+      button.bg-amber-50,
+      a.bg-amber-50 {
+        background-color: transparent !important;
+        color: var(--ink-black) !important;
+        border: 1px solid var(--gold-light) !important;
+        transition: all 0.3s ease !important;
+      }
+      button.bg-stone-50:hover,
+      a.bg-stone-50:hover,
+      button.bg-amber-50:hover,
+      a.bg-amber-50:hover {
+        background-color: var(--gold-light) !important;
+        border-color: var(--gold-light) !important;
+        transform: translateY(-2px);
+      }
+      button.bg-red-500,
+      button.bg-red-600,
+      button.bg-red-50,
+      a.bg-red-50 {
+        transition: all 0.3s ease !important;
+      }
+      button.bg-red-500:hover,
+      button.bg-red-600:hover,
+      button.bg-red-50:hover,
+      a.bg-red-50:hover {
+        transform: translateY(-2px);
+      }
+    </style>
+  </head>
+  <body class="text-stone-800 font-sans min-h-screen flex flex-col">
+    <nav
+      class="bg-white/90 backdrop-blur-md border-b-2 border-amber-200 text-amber-700 shadow-sm sticky top-0 z-10"
+    >
+      <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between h-16 items-center">
+          <div class="flex items-center cursor-pointer" onclick="goToLanding()">
+            <i data-lucide="book-open" class="h-8 w-8 mr-2 text-amber-500"></i>
+            <span class="brand-wordmark">How<span>To?</span></span>
+          </div>
+          <div class="flex items-center gap-3">
+            <a
+              href="create.html"
+              class="bg-stone-900 text-white hover:bg-amber-500 border border-stone-900 hover:border-amber-500 px-4 py-2 rounded-lg font-medium transition-colors flex items-center text-sm shadow-sm"
+            >
+              <i data-lucide="plus" class="h-4 w-4 mr-1"></i> Post an Article
+            </a>
+            <div id="auth-button"></div>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <main
+      class="flex-grow max-w-5xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 relative z-0"
+      id="app-container"
+    ></main>
+
+    <footer
+      class="bg-white/80 backdrop-blur-sm border-t-2 border-amber-200 mt-auto relative z-10"
+    >
+      <div
+        class="max-w-5xl mx-auto px-4 py-6 text-center text-stone-500 text-sm font-medium"
+      >
+        &copy; 2026 HowTo. Built for community discussions.
+      </div>
+    </footer>
+
+    <script type="module">
+      import {
+        onAuthStateChanged,
+        signOut,
+        updateProfile,
+      } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-auth.js";
+      import {
+        doc,
+        collection,
+        getDoc,
+        getDocs,
+        orderBy,
+        query,
+        setDoc,
+      } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js";
+
+      const CLOUDINARY_CLOUD_NAME = "dvmcxqdba";
+      const CLOUDINARY_UPLOAD_PRESET = "HowTo-PhotoLibrary";
+      const ADMIN_UIDS = new Set(["JDWQ2UczIoWlBefyZQXeUVsd3lD2"]);
+      const PROFILE_ACTIVITY_LIMIT = 5;
+
+      let currentUser = null;
+      let currentUserProfile = null;
+      let viewedProfile = null;
+      let isSavingProfile = false;
+      let profileFlash = null;
+
+      function escapeHTML(str) {
+        const p = document.createElement("p");
+        p.appendChild(document.createTextNode(str || ""));
+        return p.innerHTML;
+      }
+
+      function getProfileImageSrc(user) {
+        return user?.photoURL || "https://via.placeholder.com/160x160/fde68a/92400e?text=User";
+      }
+
+      function getProfileIdFromUrl() {
+        const params = new URLSearchParams(window.location.search);
+        return params.get("id");
+      }
+
+      function getProfileUrl(userId) {
+        return `profile.html?id=${encodeURIComponent(userId)}`;
+      }
+
+      function getArticleUrl(articleId) {
+        return `info.html?id=${encodeURIComponent(articleId)}`;
+      }
+
+      function getArticlesFromStorage() {
+        const stored = localStorage.getItem("articles");
+        return stored ? JSON.parse(stored) : [];
+      }
+
+      function normalizeTimestamp(value) {
+        if (value && typeof value.toMillis === "function") {
+          return value.toMillis();
+        }
+        if (value instanceof Date) {
+          return value.getTime();
+        }
+        if (typeof value === "string") {
+          const parsed = Date.parse(value);
+          return Number.isNaN(parsed) ? 0 : parsed;
+        }
+        if (typeof value === "number") {
+          return value;
+        }
+        return 0;
+      }
+
+      function getNormalizedComments(article) {
+        const commentsSource = Array.isArray(article?.comment)
+          ? article.comment
+          : Array.isArray(article?.comments)
+            ? article.comments
+            : [];
+
+        return commentsSource.map((comment) => ({
+          ...comment,
+          createdAt: normalizeTimestamp(comment.createdAt),
+        }));
+      }
+
+      function normalizeArticle(article) {
+        const comments = getNormalizedComments(article);
+
+        return {
+          ...article,
+          createdAt: normalizeTimestamp(article?.createdAt),
+          comments,
+          comment: comments,
+        };
+      }
+
+      function timeAgo(timestamp) {
+        const safeTimestamp = normalizeTimestamp(timestamp);
+        const seconds = Math.max(0, Math.floor((Date.now() - safeTimestamp) / 1000));
+        let interval = seconds / 31536000;
+        if (interval > 1) return Math.floor(interval) + " years ago";
+        interval = seconds / 2592000;
+        if (interval > 1) return Math.floor(interval) + " months ago";
+        interval = seconds / 86400;
+        if (interval > 1) return Math.floor(interval) + " days ago";
+        interval = seconds / 3600;
+        if (interval > 1) return Math.floor(interval) + " hours ago";
+        interval = seconds / 60;
+        if (interval > 1) return Math.floor(interval) + " mins ago";
+        return Math.floor(seconds) + " seconds ago";
+      }
+
+      async function loadProfileActivity(profileId) {
+        let articles = [];
+
+        try {
+          const articlesQuery = query(collection(window.firebaseDb, "articles"), orderBy("createdAt", "desc"));
+          const querySnapshot = await getDocs(articlesQuery);
+          articles = querySnapshot.docs.map((articleDoc) =>
+            normalizeArticle({
+              id: articleDoc.id,
+              ...articleDoc.data(),
+            }),
+          );
+        } catch (error) {
+          console.error("Error loading profile activity from Firestore:", error);
+          articles = getArticlesFromStorage().map((article) => normalizeArticle(article));
+        }
+
+        const recentArticles = articles
+          .filter((article) => article.authorUid && article.authorUid === profileId)
+          .sort((left, right) => right.createdAt - left.createdAt)
+          .slice(0, PROFILE_ACTIVITY_LIMIT);
+
+        const recentReplies = articles
+          .flatMap((article) =>
+            article.comments
+              .filter((comment) => comment.authorUid && comment.authorUid === profileId)
+              .map((comment) => ({
+                ...comment,
+                articleId: article.id,
+                articleTitle: article.title || "Untitled Article",
+              })),
+          )
+          .sort((left, right) => right.createdAt - left.createdAt)
+          .slice(0, PROFILE_ACTIVITY_LIMIT);
+
+        return {
+          recentArticles,
+          recentReplies,
+        };
+      }
+
+      function buildActivityCard(title, icon, intro, itemsHtml) {
+        return `
+          <div class="bg-white/95 rounded-xl shadow-sm border-2 border-amber-100 p-6 h-full">
+            <div class="flex items-center gap-3 mb-4">
+              <div class="w-11 h-11 rounded-full bg-amber-50 border border-amber-200 flex items-center justify-center">
+                <i data-lucide="${icon}" class="h-5 w-5 text-amber-700"></i>
+              </div>
+              <div>
+                <h2 class="text-xl font-bold font-serif text-amber-900">${escapeHTML(title)}</h2>
+                <p class="text-sm text-stone-500">${escapeHTML(intro)}</p>
+              </div>
+            </div>
+            ${itemsHtml}
+          </div>
+        `;
+      }
+
+      function buildRecentArticlesMarkup(recentArticles, profileName) {
+        if (recentArticles.length === 0) {
+          return `
+            <div class="rounded-xl border-2 border-dashed border-amber-200 bg-[#fffbf0] p-5 text-sm text-stone-500">
+              ${escapeHTML(profileName)} has not posted any articles yet.
+            </div>
+          `;
+        }
+
+        return `
+          <div class="space-y-4">
+            ${recentArticles
+              .map(
+                (article) => `
+              <a href="${getArticleUrl(article.id)}" class="block rounded-xl border border-amber-100 bg-[#fffbf0] p-4 transition-colors hover:border-amber-300 hover:bg-amber-50">
+                <div class="flex items-start justify-between gap-3 mb-2">
+                  <h3 class="text-base font-bold text-stone-900 leading-snug">${escapeHTML(article.title || "Untitled Article")}</h3>
+                  <span class="text-xs font-medium text-stone-400 whitespace-nowrap">${timeAgo(article.createdAt)}</span>
+                </div>
+                <p class="text-sm text-stone-600 line-clamp-3">${escapeHTML(article.content || "")}</p>
+              </a>
+            `,
+              )
+              .join("")}
+          </div>
+        `;
+      }
+
+      function buildRecentRepliesMarkup(recentReplies, profileName) {
+        if (recentReplies.length === 0) {
+          return `
+            <div class="rounded-xl border-2 border-dashed border-amber-200 bg-[#fffbf0] p-5 text-sm text-stone-500">
+              ${escapeHTML(profileName)} has not posted any replies yet.
+            </div>
+          `;
+        }
+
+        return `
+          <div class="space-y-4">
+            ${recentReplies
+              .map(
+                (reply) => `
+              <a href="${getArticleUrl(reply.articleId)}" class="block rounded-xl border border-amber-100 bg-[#fffbf0] p-4 transition-colors hover:border-amber-300 hover:bg-amber-50">
+                <div class="flex items-start justify-between gap-3 mb-2">
+                  <p class="text-sm font-bold text-amber-800 leading-snug">On ${escapeHTML(reply.articleTitle)}</p>
+                  <span class="text-xs font-medium text-stone-400 whitespace-nowrap">${timeAgo(reply.createdAt)}</span>
+                </div>
+                <p class="text-sm text-stone-600 whitespace-pre-wrap leading-relaxed line-clamp-4">${escapeHTML(reply.content || "")}</p>
+              </a>
+            `,
+              )
+              .join("")}
+          </div>
+        `;
+      }
+
+      function isReservedAdminUid(uid) {
+        return ADMIN_UIDS.has(uid || "");
+      }
+
+      function isAdminUser(profile = currentUserProfile, user = currentUser) {
+        return !!(user && (Boolean(profile?.isAdmin) || isReservedAdminUid(user.uid)));
+      }
+
+      function normalizeUserProfile(profileId, userData = {}, fallbackUser = null) {
+        return {
+          uid: profileId,
+          displayName: userData.displayName || fallbackUser?.displayName || "User",
+          email: userData.email || fallbackUser?.email || null,
+          photoURL: userData.photoURL || fallbackUser?.photoURL || null,
+          ...userData,
+          isAdmin: Boolean(userData?.isAdmin) || isReservedAdminUid(profileId),
+        };
+      }
+
+      async function loadUserProfile(profileId, fallbackUser = null) {
+        if (!profileId) {
+          return null;
+        }
+
+        const userDocRef = doc(window.firebaseDb, "users", profileId);
+        const userDocSnap = await getDoc(userDocRef);
+
+        if (userDocSnap.exists()) {
+          return normalizeUserProfile(profileId, userDocSnap.data(), fallbackUser);
+        }
+
+        if (fallbackUser && fallbackUser.uid === profileId) {
+          return normalizeUserProfile(profileId, {}, fallbackUser);
+        }
+
+        return null;
+      }
+
+      function isOwnProfile() {
+        return !!(currentUser && viewedProfile && currentUser.uid === viewedProfile.uid);
+      }
+
+      function renderAuthButton() {
+        const authButtonContainer = document.getElementById("auth-button");
+        if (currentUser) {
+          authButtonContainer.innerHTML = `
+            <button onclick="logout()" class="bg-red-50 text-red-700 hover:bg-red-100 border border-red-200 px-4 py-2 rounded-lg font-medium transition-colors flex items-center text-sm shadow-sm">
+              <i data-lucide="log-out" class="h-4 w-4 mr-1"></i> Logout
+            </button>
+          `;
+        } else {
+          authButtonContainer.innerHTML = `
+            <a href="login.html" class="bg-stone-50 text-stone-700 hover:bg-stone-100 border border-stone-200 px-4 py-2 rounded-lg font-medium transition-colors flex items-center text-sm shadow-sm">
+              <i data-lucide="log-in" class="h-4 w-4 mr-1"></i> Login
+            </a>
+          `;
+        }
+        lucide.createIcons();
+      }
+
+      function renderAccessMessage() {
+        const container = document.getElementById("app-container");
+        container.innerHTML = `
+          <div class="text-center py-12 fade-in">
+            <div class="mx-auto w-16 h-16 bg-amber-50 rounded-full flex items-center justify-center mb-4 border border-amber-100">
+              <i data-lucide="lock" class="h-8 w-8 text-amber-400"></i>
+            </div>
+            <h2 class="text-2xl font-bold font-serif text-amber-900 mb-2">Access Denied</h2>
+            <p class="text-stone-500 mb-6">Please log in to view your profile.</p>
+            <a href="login.html" class="bg-amber-500 hover:bg-amber-600 text-white px-6 py-3 rounded-lg font-bold transition-colors inline-flex items-center">
+              <i data-lucide="log-in" class="h-5 w-5 mr-2"></i> Login
+            </a>
+          </div>
+        `;
+        lucide.createIcons();
+      }
+
+      function renderProfileNotFound() {
+        const container = document.getElementById("app-container");
+        container.innerHTML = `
+          <div class="text-center py-12 fade-in">
+            <div class="mx-auto w-16 h-16 bg-amber-50 rounded-full flex items-center justify-center mb-4 border border-amber-100">
+              <i data-lucide="user-x" class="h-8 w-8 text-amber-400"></i>
+            </div>
+            <h2 class="text-2xl font-bold font-serif text-amber-900 mb-2">Profile Not Found</h2>
+            <p class="text-stone-500 mb-6">We couldn't find that user profile.</p>
+            <button onclick="goHome()" class="bg-amber-500 hover:bg-amber-600 text-white px-6 py-3 rounded-lg font-bold transition-colors inline-flex items-center">
+              <i data-lucide="house" class="h-5 w-5 mr-2"></i> Go Home
+            </button>
+          </div>
+        `;
+        lucide.createIcons();
+      }
+
+      async function renderProfile() {
+        const requestedProfileId = getProfileIdFromUrl();
+        const profileId = requestedProfileId || currentUser?.uid || null;
+
+        if (!profileId) {
+          renderAccessMessage();
+          return;
+        }
+
+        if (!requestedProfileId && currentUser?.uid) {
+          window.history.replaceState({}, "", getProfileUrl(currentUser.uid));
+        }
+
+        try {
+          viewedProfile = await loadUserProfile(profileId, currentUser);
+
+          if (!viewedProfile) {
+            renderProfileNotFound();
+            return;
+          }
+
+          const activity = await loadProfileActivity(profileId);
+
+          const ownProfile = isOwnProfile();
+          const viewerIsAdmin = isAdminUser();
+          const viewedIsAdmin = Boolean(viewedProfile.isAdmin) || isReservedAdminUid(viewedProfile.uid);
+          const canViewUid = ownProfile || viewerIsAdmin;
+          const container = document.getElementById("app-container");
+          const safeName = escapeHTML(viewedProfile.displayName || "User");
+          const safeEmail = escapeHTML(viewedProfile.email || "No email available");
+          const safeUid = escapeHTML(viewedProfile.uid || "");
+          const safePhoto = escapeHTML(getProfileImageSrc(viewedProfile));
+
+          container.innerHTML = `
+            <div class="fade-in max-w-4xl mx-auto space-y-6">
+              <div class="bg-white/95 rounded-xl shadow-sm border-2 border-amber-100 p-6 sm:p-8">
+                <div class="flex flex-col gap-8 md:flex-row md:items-start">
+                  <div class="md:w-1/5 flex flex-col items-center gap-4">
+                    <img id="profile-avatar" src="${safePhoto}" alt="Profile Picture" class="w-28 h-28 sm:w-32 sm:h-32 rounded-full border-4 border-amber-200 object-cover shadow-sm">
+                    ${
+                      ownProfile
+                        ? `
+                    <label class="w-full cursor-pointer bg-amber-50 hover:bg-amber-100 border border-amber-200 rounded-xl p-4 text-left transition-colors">
+                      <p class="text-xs font-bold uppercase tracking-[0.2em] text-amber-700 mb-2">Profile Picture</p>
+                      <p class="text-sm text-stone-600 leading-relaxed mb-3">Choose a new photo to upload.</p>
+                      <span class="inline-flex items-center text-sm font-bold text-amber-800">
+                        <i data-lucide="image-plus" class="h-4 w-4 mr-2"></i> Select Image
+                      </span>
+                      <input id="profile-photo" type="file" accept="image/*" class="hidden" onchange="handlePhotoSelection(event)" />
+                    </label>
+                    <p id="photo-selection-label" class="text-xs text-stone-500 text-center leading-relaxed">No new image selected.</p>
+                    `
+                        : ``
+                    }
+                  </div>
+                  <div class="md:w-4/5 text-center md:text-left space-y-6">
+                    <div>
+                      <div class="flex flex-wrap items-center justify-center gap-3 md:justify-start">
+                        <h1 class="text-3xl font-bold font-serif text-amber-900">${safeName}</h1>
+                        ${
+                          viewedIsAdmin
+                            ? `
+                        <span class="inline-flex items-center rounded-full border border-amber-200 bg-amber-50 px-3 py-1 text-xs font-bold uppercase tracking-[0.18em] text-amber-700">
+                          <i data-lucide="shield-check" class="mr-1.5 h-3.5 w-3.5"></i> Admin
+                        </span>
+                        `
+                            : ""
+                        }
+                      </div>
+                      ${
+                        ownProfile
+                          ? `
+                      <p class="text-stone-600 mb-2">${safeEmail}</p>
+                      ${
+                        canViewUid
+                          ? `<p class="text-stone-500 text-sm break-all">User ID: ${safeUid}</p>`
+                          : ""
+                      }
+                      `
+                          : `
+                      ${
+                        canViewUid
+                          ? `<p class="text-stone-500 text-sm break-all mb-2">User ID: ${safeUid}</p>`
+                          : ""
+                      }
+                      <p class="text-stone-500 text-sm">Community member profile</p>
+                      `
+                      }
+                    </div>
+
+                    <div id="profile-message" class="hidden rounded-lg border px-4 py-3 text-sm font-medium"></div>
+
+                    ${
+                      ownProfile
+                        ? `
+                    <form id="profile-form" class="bg-[#fffbf0] rounded-xl border-2 border-amber-200 p-5 space-y-4" onsubmit="saveProfileChanges(event)">
+                      <div class="flex items-center justify-between gap-3 flex-wrap">
+                        <h2 class="text-lg font-bold font-serif text-amber-900">Edit Profile</h2>
+                      </div>
+                      <div>
+                        <label for="display-name" class="block text-sm font-bold text-stone-700 mb-2">Username</label>
+                        <input
+                          id="display-name"
+                          type="text"
+                          maxlength="40"
+                          value="${safeName}"
+                          required
+                          class="w-full px-4 py-3 border-2 border-amber-100 bg-white rounded-lg focus:ring-0 focus:border-amber-400 outline-none transition-all text-stone-800"
+                          placeholder="Choose a display name"
+                        />
+                      </div>
+                      <div class="flex flex-wrap items-center justify-between gap-3">
+                        <p class="text-sm text-stone-500">Username and avatar changes are saved to both Firebase Auth and your Firestore user record.</p>
+                        <div class="flex items-center gap-3">
+                          <button type="submit" id="save-profile-btn" class="bg-amber-500 hover:bg-amber-600 text-white px-6 py-3 rounded-lg font-bold transition-colors inline-flex items-center justify-center disabled:opacity-60 disabled:cursor-not-allowed">
+                            <i data-lucide="save" class="h-5 w-5 mr-2"></i> Save Profile
+                          </button>
+                        </div>
+                      </div>
+                    </form>
+
+                    <div class="bg-white/80 rounded-xl border border-red-200 p-5 flex flex-wrap items-center justify-between gap-3">
+                      <div>
+                        <h3 class="text-base font-bold text-red-700">Sign Out</h3>
+                        <p class="text-sm text-stone-500">Log out of your account from this device.</p>
+                      </div>
+                      <button type="button" onclick="logout()" class="bg-red-500 hover:bg-red-600 text-white px-6 py-3 rounded-lg font-bold transition-colors inline-flex items-center justify-center">
+                        <i data-lucide="log-out" class="h-5 w-5 mr-2"></i> Logout
+                      </button>
+                    </div>
+                    `
+                        : currentUser
+                          ? `
+                    <div class="bg-[#fffbf0] rounded-xl border-2 border-amber-200 p-5 flex flex-wrap items-center justify-between gap-3">
+                      <div>
+                        <h2 class="text-lg font-bold font-serif text-amber-900">Public Profile</h2>
+                        <p class="text-sm text-stone-500">Viewing this community member's profile.</p>
+                      </div>
+                    </div>
+                    `
+                          : ""
+                    }
+
+                    ${
+                      viewerIsAdmin && !ownProfile
+                        ? `
+                    <div class="bg-white/80 rounded-xl border border-amber-200 p-5 flex flex-wrap items-center justify-between gap-3">
+                      <div>
+                        <h2 class="text-lg font-bold font-serif text-amber-900">Admin Permissions</h2>
+                        <p class="text-sm text-stone-500">${
+                          viewedIsAdmin
+                            ? "This user already has admin access."
+                            : "Grant admin access to this user account."
+                        }</p>
+                      </div>
+                      ${
+                        viewedIsAdmin
+                          ? `
+                      <span class="inline-flex items-center rounded-lg border border-amber-200 bg-amber-50 px-4 py-2 text-sm font-bold text-amber-800">
+                        <i data-lucide="shield-check" class="mr-2 h-4 w-4"></i> Admin Enabled
+                      </span>
+                      `
+                          : `
+                      <button type="button" onclick="grantAdminAccess()" class="bg-amber-500 hover:bg-amber-600 text-white px-6 py-3 rounded-lg font-bold transition-colors inline-flex items-center justify-center">
+                        <i data-lucide="shield-plus" class="h-5 w-5 mr-2"></i> Grant Admin
+                      </button>
+                      `
+                      }
+                    </div>
+                    `
+                        : ""
+                    }
+                  </div>
+                </div>
+              </div>
+
+              <div class="grid gap-6 lg:grid-cols-2">
+                ${buildActivityCard(
+                  "Recent Replies",
+                  "messages-square",
+                  "Latest replies from this community member.",
+                  buildRecentRepliesMarkup(activity.recentReplies, viewedProfile.displayName || "This user"),
+                )}
+                ${buildActivityCard(
+                  "Recent Articles",
+                  "newspaper",
+                  "Latest articles published by this community member.",
+                  buildRecentArticlesMarkup(activity.recentArticles, viewedProfile.displayName || "This user"),
+                )}
+              </div>
+            </div>
+          `;
+
+          lucide.createIcons();
+          if (profileFlash) {
+            showProfileMessage(profileFlash.message, profileFlash.kind);
+            profileFlash = null;
+          }
+        } catch (error) {
+          console.error("Error loading profile:", error);
+          renderProfileNotFound();
+        }
+      }
+
+      function showProfileMessage(message, kind) {
+        const messageEl = document.getElementById("profile-message");
+        if (!messageEl) {
+          return;
+        }
+
+        messageEl.className = "rounded-lg border px-4 py-3 text-sm font-medium";
+        if (kind === "success") {
+          messageEl.classList.add("bg-green-50", "border-green-200", "text-green-700");
+        } else {
+          messageEl.classList.add("bg-red-50", "border-red-200", "text-red-700");
+        }
+        messageEl.textContent = message;
+      }
+
+      function handlePhotoSelection(event) {
+        const file = event.target.files?.[0];
+        const label = document.getElementById("photo-selection-label");
+        const avatar = document.getElementById("profile-avatar");
+
+        if (!label || !avatar) {
+          return;
+        }
+
+        if (!file) {
+          label.textContent = "No new image selected.";
+          avatar.src = getProfileImageSrc(viewedProfile || currentUser);
+          return;
+        }
+
+        label.textContent = `Selected: ${file.name}`;
+        avatar.src = URL.createObjectURL(file);
+      }
+
+      async function uploadProfileImage(file) {
+        const formData = new FormData();
+        formData.append("file", file);
+        formData.append("upload_preset", CLOUDINARY_UPLOAD_PRESET);
+
+        const response = await fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`, {
+          method: "POST",
+          body: formData,
+        });
+
+        const data = await response.json();
+        if (!response.ok || !data.secure_url) {
+          throw new Error(data?.error?.message || "Cloudinary upload failed.");
+        }
+
+        return data.secure_url;
+      }
+
+      async function saveProfileChanges(event) {
+        event.preventDefault();
+        if (!currentUser || !isOwnProfile() || isSavingProfile) {
+          return;
+        }
+
+        const nameInput = document.getElementById("display-name");
+        const photoInput = document.getElementById("profile-photo");
+        const saveButton = document.getElementById("save-profile-btn");
+        const newName = nameInput.value.trim();
+        const selectedFile = photoInput.files?.[0] || null;
+
+        if (!newName) {
+          showProfileMessage("Username cannot be empty.", "error");
+          return;
+        }
+
+        isSavingProfile = true;
+        saveButton.disabled = true;
+        showProfileMessage(selectedFile ? "Uploading photo and saving profile..." : "Saving profile...", "success");
+
+        try {
+          let nextPhotoURL = currentUser.photoURL || null;
+          if (selectedFile) {
+            nextPhotoURL = await uploadProfileImage(selectedFile);
+          }
+
+          await updateProfile(currentUser, {
+            displayName: newName,
+            photoURL: nextPhotoURL,
+          });
+
+          await setDoc(
+            doc(window.firebaseDb, "users", currentUser.uid),
+            {
+              uid: currentUser.uid,
+              displayName: newName,
+              email: currentUser.email || null,
+              photoURL: nextPhotoURL,
+              lastLogin: new Date(),
+            },
+            { merge: true },
+          );
+
+          currentUser = window.firebaseAuth.currentUser;
+          currentUserProfile = {
+            ...(currentUserProfile || {}),
+            uid: currentUser.uid,
+            displayName: currentUser.displayName || newName,
+            email: currentUser.email || null,
+            photoURL: nextPhotoURL,
+            isAdmin: isAdminUser(currentUserProfile, currentUser),
+          };
+          viewedProfile = {
+            ...(viewedProfile || {}),
+            uid: currentUser.uid,
+            displayName: currentUser.displayName || newName,
+            email: currentUser.email || null,
+            photoURL: nextPhotoURL,
+            isAdmin: currentUserProfile.isAdmin,
+          };
+          profileFlash = {
+            message: "Profile updated successfully.",
+            kind: "success",
+          };
+          renderAuthButton();
+          await renderProfile();
+        } catch (error) {
+          console.error("Error updating profile:", error);
+          showProfileMessage("Unable to update profile right now. Please try again.", "error");
+        } finally {
+          isSavingProfile = false;
+          const refreshedSaveButton = document.getElementById("save-profile-btn");
+          if (refreshedSaveButton) {
+            refreshedSaveButton.disabled = false;
+          }
+        }
+      }
+
+      async function grantAdminAccess() {
+        if (!currentUser || !viewedProfile || isOwnProfile() || !isAdminUser()) {
+          return;
+        }
+
+        try {
+          await setDoc(
+            doc(window.firebaseDb, "users", viewedProfile.uid),
+            {
+              uid: viewedProfile.uid,
+              displayName: viewedProfile.displayName || "User",
+              email: viewedProfile.email || null,
+              photoURL: viewedProfile.photoURL || null,
+              isAdmin: true,
+              adminGrantedAt: new Date(),
+              adminGrantedBy: currentUser.uid,
+            },
+            { merge: true },
+          );
+
+          viewedProfile = {
+            ...viewedProfile,
+            isAdmin: true,
+          };
+          profileFlash = {
+            message: "Admin access granted successfully.",
+            kind: "success",
+          };
+          await renderProfile();
+        } catch (error) {
+          console.error("Error granting admin access:", error);
+          showProfileMessage("Unable to grant admin access right now. Please try again.", "error");
+        }
+      }
+
+      function logout() {
+        signOut(window.firebaseAuth).then(() => {
+          window.location.href = "index.html";
+        });
+      }
+
+      function goHome() {
+        window.location.href = "index.html";
+      }
+
+      function goToLanding() {
+        window.location.href = "home.html";
+      }
+
+      window.logout = logout;
+      window.goHome = goHome;
+      window.goToLanding = goToLanding;
+      window.saveProfileChanges = saveProfileChanges;
+      window.handlePhotoSelection = handlePhotoSelection;
+      window.grantAdminAccess = grantAdminAccess;
+
+      onAuthStateChanged(window.firebaseAuth, async (user) => {
+        currentUser = user;
+        currentUserProfile = user ? await loadUserProfile(user.uid, user) : null;
+        renderAuthButton();
+        await renderProfile();
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,1134 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Article | HowTo?</title>
+    <link rel="icon" type="image/x-icon" href="./logo.png">
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+      :root {
+        --gold-light: #ead7b0;
+        --gold-primary: #9f7528;
+        --gold-dark: #6e5018;
+        --paper-white: #ffffff;
+        --ink-black: #2c2c2c;
+        --line-soft: #ecebe7;
+        --border-soft: #e5ddd0;
+      }
+      /* Custom scrollbar for a polished look */
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #ecebe7;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: var(--gold-primary);
+        border-radius: 4px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: var(--gold-dark);
+      }
+      /* Fade in animation */
+      .fade-in {
+        animation: fadeIn 0.3s ease-in-out;
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      /* Notebook aesthetic background */
+      body {
+        background-color: var(--gold-light);
+        background-image: radial-gradient(var(--gold-primary) 0.5px, transparent 0.5px);
+        background-size: 20px 20px;
+        font-family: "EB Garamond", serif;
+        position: relative;
+      }
+      body::before {
+        display: none;
+      }
+      @media (min-width: 640px) {
+        body::before {
+          left: 8%;
+        }
+      }
+      @media (min-width: 1024px) {
+        body::before {
+          left: 15%;
+        }
+      }
+      .bg-white\/95,
+      .bg-white\/90,
+      .bg-white\/80,
+      .bg-white {
+        background-color: rgba(255, 255, 255, 0.94) !important;
+      }
+      .text-amber-900,
+      .text-amber-800 {
+        color: var(--gold-dark) !important;
+      }
+      .text-amber-700,
+      .text-amber-600,
+      .text-amber-500,
+      .text-amber-400 {
+        color: var(--gold-primary) !important;
+      }
+      .text-stone-900 {
+        color: var(--ink-black) !important;
+      }
+      .text-stone-800 {
+        color: #343434 !important;
+      }
+      .text-stone-700 {
+        color: #4a4a4a !important;
+      }
+      .text-stone-600,
+      .text-stone-500 {
+        color: #676767 !important;
+      }
+      .text-stone-400 {
+        color: #8b8b8b !important;
+      }
+      .bg-amber-50 {
+        background-color: var(--gold-light) !important;
+      }
+      .bg-amber-100 {
+        background-color: #f3e7cf !important;
+      }
+      .bg-amber-500 {
+        background-color: var(--gold-primary) !important;
+      }
+      .border-amber-50 {
+        border-color: #f6efe2 !important;
+      }
+      .border-amber-100 {
+        border-color: #efe5d2 !important;
+      }
+      .border-amber-200 {
+        border-color: var(--border-soft) !important;
+      }
+      .border-amber-300 {
+        border-color: #d8c4a0 !important;
+      }
+      .hover\:bg-amber-100:hover {
+        background-color: #f3e7cf !important;
+      }
+      .hover\:bg-amber-600:hover {
+        background-color: var(--gold-dark) !important;
+      }
+      .hover\:border-amber-300:hover {
+        border-color: var(--gold-primary) !important;
+      }
+      .hover\:text-amber-700:hover,
+      .hover\:text-amber-600:hover {
+        color: var(--gold-dark) !important;
+      }
+      .focus\:border-amber-400:focus {
+        border-color: var(--gold-primary) !important;
+      }
+      .group:hover .group-hover\:text-amber-600 {
+        color: var(--gold-primary) !important;
+      }
+      [class*="bg-[#fffbf0]"] {
+        background-color: #fcf8ef !important;
+      }
+      nav,
+      footer,
+      main {
+        font-family: "Inter", sans-serif;
+      }
+      main {
+        background: rgba(255, 255, 255, 0.96);
+        box-shadow:
+          0 10px 30px rgba(0, 0, 0, 0.1),
+          5px 5px 0px var(--gold-dark),
+          10px 10px 0px var(--gold-primary);
+        border-radius: 4px;
+        margin-top: 2rem;
+        margin-bottom: 2.5rem;
+      }
+      .brand-wordmark {
+        font-family: "EB Garamond", serif;
+        font-size: 2rem;
+        font-weight: 800;
+        color: var(--ink-black);
+      }
+      .brand-wordmark span {
+        color: var(--gold-primary);
+      }
+      button.bg-stone-900,
+      a.bg-stone-900,
+      button.bg-amber-500,
+      a.bg-amber-500 {
+        background-color: var(--ink-black) !important;
+        color: var(--paper-white) !important;
+        border: 1px solid var(--ink-black) !important;
+        transition: all 0.3s ease !important;
+      }
+      button.bg-stone-900:hover,
+      a.bg-stone-900:hover,
+      button.bg-amber-500:hover,
+      a.bg-amber-500:hover {
+        background-color: var(--gold-primary) !important;
+        border-color: var(--gold-primary) !important;
+        transform: translateY(-2px);
+      }
+      button.bg-stone-50,
+      a.bg-stone-50,
+      button.bg-amber-50,
+      a.bg-amber-50 {
+        background-color: transparent !important;
+        color: var(--ink-black) !important;
+        border: 1px solid var(--gold-light) !important;
+        transition: all 0.3s ease !important;
+      }
+      button.bg-stone-50:hover,
+      a.bg-stone-50:hover,
+      button.bg-amber-50:hover,
+      a.bg-amber-50:hover {
+        background-color: var(--gold-light) !important;
+        border-color: var(--gold-light) !important;
+        transform: translateY(-2px);
+      }
+      button.bg-red-500,
+      button.bg-red-600,
+      button.bg-red-50,
+      a.bg-red-50 {
+        transition: all 0.3s ease !important;
+      }
+      button.bg-red-500:hover,
+      button.bg-red-600:hover,
+      button.bg-red-50:hover,
+      a.bg-red-50:hover {
+        transform: translateY(-2px);
+      }
+    </style>
+  </head>
+  <body class="text-stone-800 font-sans min-h-screen flex flex-col">
+    <!-- Navigation Bar -->
+    <nav
+      class="bg-white/90 backdrop-blur-md border-b-2 border-amber-200 text-amber-700 shadow-sm sticky top-0 z-10"
+    >
+      <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between h-16 items-center">
+          <div class="flex items-center cursor-pointer" onclick="goToLanding()">
+            <i data-lucide="book-open" class="h-8 w-8 mr-2 text-amber-500"></i>
+            <span class="brand-wordmark">How<span>To?</span></span>
+          </div>
+          <div>
+            <a
+              href="create.html"
+              class="bg-stone-900 text-white hover:bg-amber-500 border border-stone-900 hover:border-amber-500 px-4 py-2 rounded-lg font-medium transition-colors flex items-center text-sm shadow-sm inline-flex"
+            >
+              <i data-lucide="plus" class="h-4 w-4 mr-1"></i> Post an Article
+            </a>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main
+      class="flex-grow max-w-5xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 relative z-0"
+      id="app-container"
+    >
+      <!-- Content will be injected here by JavaScript -->
+    </main>
+
+    <!-- Footer -->
+    <footer
+      class="bg-white/80 backdrop-blur-sm border-t-2 border-amber-200 mt-auto relative z-10"
+    >
+      <div
+        class="max-w-5xl mx-auto px-4 py-6 text-center text-stone-500 text-sm font-medium"
+      >
+        &copy; 2026 HowTo. Built for community discussions.
+      </div>
+    </footer>
+
+    <script type="module">
+      import {
+        initializeApp,
+        getApps,
+      } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
+      import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-auth.js";
+      import {
+        getFirestore,
+        doc,
+        getDoc,
+        updateDoc,
+        deleteDoc,
+      } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js";
+
+      const firebaseConfig = {
+        apiKey: "AIzaSyCheSKMoXuUCQPzzKnkzj1NHMG8YXqIChY",
+        authDomain: "howto-d45bc.firebaseapp.com",
+        projectId: "howto-d45bc",
+        storageBucket: "howto-d45bc.firebasestorage.app",
+        messagingSenderId: "929511966384",
+        appId: "1:929511966384:web:3fe35c2267f4dbe779dd75",
+        measurementId: "G-9EXDTY4GB8",
+      };
+
+      let app;
+      if (getApps().length === 0) {
+        app = initializeApp(firebaseConfig);
+      } else {
+        app = getApps()[0];
+      }
+      const auth = getAuth(app);
+      const db = getFirestore(app);
+      const ADMIN_UIDS = new Set(["JDWQ2UczIoWlBefyZQXeUVsd3lD2"]);
+      let currentUserProfile = null;
+      let currentArticle = null;
+      let isEditingArticle = false;
+      let editingCommentId = null;
+      let isConfirmingArticleRemoval = false;
+      let articleFlash = null;
+
+      window.firebaseAuth = auth;
+      window.firebaseDb = db;
+      // Get articles from localStorage
+      function getArticlesFromStorage() {
+        const stored = localStorage.getItem("articles");
+        if (stored) {
+          return JSON.parse(stored);
+        }
+        return [];
+      }
+
+      function normalizeTimestamp(value) {
+        if (value && typeof value.toMillis === "function") {
+          return value.toMillis();
+        }
+        if (value instanceof Date) {
+          return value.getTime();
+        }
+        if (typeof value === "string") {
+          const parsed = Date.parse(value);
+          return Number.isNaN(parsed) ? value : parsed;
+        }
+        return value;
+      }
+
+      function getNormalizedComments(article) {
+        const commentsSource = Array.isArray(article?.comment)
+          ? article.comment
+          : Array.isArray(article?.comments)
+            ? article.comments
+            : [];
+
+        return commentsSource.map((comment) => ({
+          ...comment,
+          createdAt: normalizeTimestamp(comment.createdAt),
+        }));
+      }
+
+      function normalizeArticle(article) {
+        if (!article) {
+          return null;
+        }
+
+        const comments = getNormalizedComments(article);
+        return {
+          ...article,
+          createdAt: normalizeTimestamp(article.createdAt),
+          comment: comments,
+          comments,
+        };
+      }
+
+      // Simple HTML escaper to prevent XSS
+      function escapeHTML(str) {
+        const p = document.createElement("p");
+        p.appendChild(document.createTextNode(str));
+        return p.innerHTML;
+      }
+
+      function decodeHTML(str) {
+        const p = document.createElement("p");
+        p.innerHTML = str || "";
+        return p.textContent || "";
+      }
+
+      // Generate initials for avatars
+      function getInitials(name) {
+        return name.substring(0, 2).toUpperCase();
+      }
+
+      // Get a consistent color based on string (for avatars)
+      function stringToColor(str) {
+        let hash = 0;
+        for (let i = 0; i < str.length; i++) {
+          hash = str.charCodeAt(i) + ((hash << 5) - hash);
+        }
+        const c = (hash & 0x00ffffff).toString(16).toUpperCase();
+        return "#" + "00000".substring(0, 6 - c.length) + c;
+      }
+
+      function buildAvatar(name, photoURL, sizeClasses, textClasses = "text-sm", extraClasses = "") {
+        const safeName = escapeHTML(name || "User");
+        const safePhotoURL = photoURL ? escapeHTML(photoURL) : "";
+        const classes = `rounded-full ${sizeClasses} ${extraClasses}`.trim();
+
+        if (safePhotoURL) {
+          return `<img src="${safePhotoURL}" alt="${safeName}" class="${classes} object-cover border border-amber-100 shadow-sm">`;
+        }
+
+        return `<div class="${classes} text-white flex items-center justify-center font-bold ${textClasses} shadow-inner border border-white/50" style="background-color: ${stringToColor(name || "User")}">
+            ${escapeHTML(getInitials(name || "U"))}
+          </div>`;
+      }
+
+      function getProfileUrl(userId) {
+        return `profile.html?id=${encodeURIComponent(userId)}`;
+      }
+
+      function getCommentKey(comment) {
+        return String(comment?.id ?? "");
+      }
+
+      function isCurrentUserAdmin() {
+        return !!(window.currentUser && (ADMIN_UIDS.has(window.currentUser.uid) || currentUserProfile?.isAdmin));
+      }
+
+      function isReservedAdminUid(uid) {
+        return ADMIN_UIDS.has(uid || "");
+      }
+
+      async function loadCurrentUserProfile(user) {
+        if (!user) {
+          return null;
+        }
+
+        try {
+          const userDocRef = doc(window.firebaseDb, "users", user.uid);
+          const userDocSnap = await getDoc(userDocRef);
+          const userData = userDocSnap.exists() ? userDocSnap.data() : {};
+
+          return {
+            uid: user.uid,
+            ...userData,
+            isAdmin: Boolean(userData?.isAdmin) || isReservedAdminUid(user.uid),
+          };
+        } catch (error) {
+          console.error("Error loading current user profile:", error);
+          return {
+            uid: user.uid,
+            isAdmin: isReservedAdminUid(user.uid),
+          };
+        }
+      }
+
+      function canEditArticle(article) {
+        return !!(window.currentUser && article?.authorUid && window.currentUser.uid === article.authorUid);
+      }
+
+      function canRemoveArticle(article) {
+        return canEditArticle(article) || isCurrentUserAdmin();
+      }
+
+      function canEditComment(comment) {
+        return !!(window.currentUser && comment?.authorUid && window.currentUser.uid === comment.authorUid);
+      }
+
+      function canRemoveComment(comment) {
+        return canEditComment(comment) || isCurrentUserAdmin();
+      }
+
+      function buildFlashMessage() {
+        if (!articleFlash?.message) {
+          return "";
+        }
+
+        const toneClasses = articleFlash.kind === "error"
+          ? "bg-red-50 border-red-200 text-red-700"
+          : "bg-green-50 border-green-200 text-green-700";
+
+        return `
+          <div class="mb-6 rounded-xl border px-4 py-3 text-sm font-medium ${toneClasses}">
+            ${escapeHTML(articleFlash.message)}
+          </div>
+        `;
+      }
+
+      function syncArticleToLocalStorage(updatedArticle) {
+        const articles = getArticlesFromStorage();
+        const articleIndex = articles.findIndex((article) => article.id === updatedArticle.id);
+
+        if (articleIndex === -1) {
+          return;
+        }
+
+        articles[articleIndex] = {
+          ...articles[articleIndex],
+          ...updatedArticle,
+          comment: updatedArticle.comments,
+          comments: updatedArticle.comments,
+        };
+        localStorage.setItem("articles", JSON.stringify(articles));
+      }
+
+      function removeArticleFromLocalStorage(articleId) {
+        const articles = getArticlesFromStorage().filter((article) => article.id !== articleId);
+        localStorage.setItem("articles", JSON.stringify(articles));
+      }
+
+      async function loadArticleData(articleId) {
+        const docRef = doc(window.firebaseDb, "articles", articleId);
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+          return {
+            article: normalizeArticle({ id: docSnap.id, ...docSnap.data() }),
+            source: "firestore",
+          };
+        }
+
+        const article = normalizeArticle(getArticlesFromStorage().find((item) => item.id === articleId));
+        return {
+          article,
+          source: article ? "local" : null,
+        };
+      }
+
+      async function saveArticleComments(articleId, comments) {
+        const { article, source } = await loadArticleData(articleId);
+        if (!article) {
+          throw new Error("Article not found.");
+        }
+
+        const normalizedComments = comments.map((comment) => ({
+          ...comment,
+          createdAt: normalizeTimestamp(comment.createdAt),
+        }));
+
+        const updatedArticle = {
+          ...article,
+          comment: normalizedComments,
+          comments: normalizedComments,
+        };
+
+        if (source === "firestore") {
+          await updateDoc(doc(window.firebaseDb, "articles", articleId), {
+            comment: normalizedComments,
+            comments: normalizedComments,
+          });
+        } else {
+          syncArticleToLocalStorage(updatedArticle);
+        }
+
+        currentArticle = updatedArticle;
+      }
+
+      function buildProfileLink(name, userId, classes = "") {
+        const safeName = escapeHTML(name || "User");
+        const safeClasses = classes || "";
+
+        if (!userId) {
+          return `<span class="${safeClasses}">${safeName}</span>`;
+        }
+
+        return `<a href="${getProfileUrl(userId)}" class="${safeClasses} hover:text-amber-700 transition-colors">${safeName}</a>`;
+      }
+
+      // Format relative time (e.g., "2 hours ago")
+      function timeAgo(timestamp) {
+        const seconds = Math.floor((new Date() - timestamp) / 1000);
+        let interval = seconds / 31536000;
+        if (interval > 1) return Math.floor(interval) + " years ago";
+        interval = seconds / 2592000;
+        if (interval > 1) return Math.floor(interval) + " months ago";
+        interval = seconds / 86400;
+        if (interval > 1) return Math.floor(interval) + " days ago";
+        interval = seconds / 3600;
+        if (interval > 1) return Math.floor(interval) + " hours ago";
+        interval = seconds / 60;
+        if (interval > 1) return Math.floor(interval) + " mins ago";
+        return Math.floor(seconds) + " seconds ago";
+      }
+
+      // Get article ID from URL query parameter
+      function getArticleIdFromUrl() {
+        const params = new URLSearchParams(window.location.search);
+        return params.get("id");
+      }
+
+      function goHome() {
+        window.location.href = "index.html";
+      }
+
+      function goToLanding() {
+        window.location.href = "home.html";
+      }
+
+      async function handleAddComment(e) {
+        e.preventDefault();
+        const articleId = getArticleIdFromUrl();
+        const authorInput = document.getElementById("comment-author");
+        const contentInput = document.getElementById("comment-content");
+        const author = window.currentUser ? window.currentUser.displayName : authorInput.value.trim();
+        const content = contentInput.value.trim();
+
+        if (!articleId || !author || !content) {
+          return;
+        }
+
+        const newComment = {
+          id: Date.now(),
+          author,
+          authorUid: window.currentUser?.uid || null,
+          authorPhotoURL: window.currentUser?.photoURL || null,
+          content,
+          createdAt: Date.now(),
+        };
+
+        try {
+          const { article } = await loadArticleData(articleId);
+          if (!article) {
+            return;
+          }
+
+          await saveArticleComments(articleId, [...article.comments, newComment]);
+
+          document.getElementById("comment-form").reset();
+          articleFlash = {
+            message: "Reply posted successfully.",
+            kind: "success",
+          };
+          await renderArticle();
+        } catch (error) {
+          console.error("Error posting reply:", error);
+          alert("Unable to post reply right now. Please try again.");
+          return;
+        }
+
+        // Scroll to bottom to see new comment
+        setTimeout(() => {
+          window.scrollTo(0, document.body.scrollHeight);
+        }, 50);
+      }
+
+      function startArticleEdit() {
+        if (!canEditArticle(currentArticle)) {
+          return;
+        }
+
+        isEditingArticle = true;
+        isConfirmingArticleRemoval = false;
+        articleFlash = null;
+        renderArticle();
+      }
+
+      function cancelArticleEdit() {
+        isEditingArticle = false;
+        articleFlash = null;
+        renderArticle();
+      }
+
+      function startArticleRemoval() {
+        if (!currentArticle || !canRemoveArticle(currentArticle)) {
+          return;
+        }
+
+        isEditingArticle = false;
+        isConfirmingArticleRemoval = true;
+        articleFlash = null;
+        renderArticle();
+      }
+
+      function cancelArticleRemoval() {
+        isConfirmingArticleRemoval = false;
+        articleFlash = null;
+        renderArticle();
+      }
+
+      async function saveArticleEdit() {
+        if (!currentArticle || !canEditArticle(currentArticle)) {
+          return;
+        }
+
+        const titleInput = document.getElementById("article-edit-title");
+        const contentInput = document.getElementById("article-edit-content");
+        const nextTitle = titleInput?.value.trim() || "";
+        const nextContent = contentInput?.value.trim() || "";
+
+        if (!nextTitle || !nextContent) {
+          articleFlash = {
+            message: "Title and content cannot be empty.",
+            kind: "error",
+          };
+          renderArticle();
+          return;
+        }
+
+        try {
+          const { article, source } = await loadArticleData(currentArticle.id);
+          if (!article || !canEditArticle(article)) {
+            throw new Error("You do not have permission to edit this article.");
+          }
+
+          const updatedArticle = {
+            ...article,
+            title: nextTitle,
+            content: nextContent,
+          };
+
+          if (source === "firestore") {
+            await updateDoc(doc(window.firebaseDb, "articles", article.id), {
+              title: nextTitle,
+              content: nextContent,
+            });
+          } else {
+            syncArticleToLocalStorage(updatedArticle);
+          }
+
+          currentArticle = updatedArticle;
+          isEditingArticle = false;
+          articleFlash = {
+            message: "Article updated successfully.",
+            kind: "success",
+          };
+          await renderArticle();
+        } catch (error) {
+          console.error("Error updating article:", error);
+          articleFlash = {
+            message: "Unable to update this article right now.",
+            kind: "error",
+          };
+          renderArticle();
+        }
+      }
+
+      async function removeArticle() {
+        if (!currentArticle || !canRemoveArticle(currentArticle)) {
+          return;
+        }
+
+        try {
+          const { article, source } = await loadArticleData(currentArticle.id);
+          if (!article || !canRemoveArticle(article)) {
+            throw new Error("You do not have permission to remove this article.");
+          }
+
+          if (source === "firestore") {
+            await deleteDoc(doc(window.firebaseDb, "articles", article.id));
+          } else {
+            removeArticleFromLocalStorage(article.id);
+          }
+
+          isConfirmingArticleRemoval = false;
+          window.location.href = "index.html";
+        } catch (error) {
+          console.error("Error removing article:", error);
+          isConfirmingArticleRemoval = false;
+          articleFlash = {
+            message: "Unable to remove this article right now.",
+            kind: "error",
+          };
+          renderArticle();
+        }
+      }
+
+      function startCommentEdit(commentId) {
+        const comment = currentArticle?.comments?.find((item) => getCommentKey(item) === String(commentId));
+        if (!comment || !canEditComment(comment)) {
+          return;
+        }
+
+        editingCommentId = String(commentId);
+        articleFlash = null;
+        renderArticle();
+      }
+
+      function cancelCommentEdit() {
+        editingCommentId = null;
+        articleFlash = null;
+        renderArticle();
+      }
+
+      async function saveCommentEdit(commentId) {
+        const articleId = getArticleIdFromUrl();
+        const commentKey = String(commentId);
+        const contentInput = document.getElementById(`comment-edit-content-${commentKey}`);
+        const nextContent = contentInput?.value.trim() || "";
+
+        if (!nextContent) {
+          articleFlash = {
+            message: "Reply content cannot be empty.",
+            kind: "error",
+          };
+          renderArticle();
+          return;
+        }
+
+        try {
+          const { article } = await loadArticleData(articleId);
+          const nextComments = article?.comments?.map((comment) => {
+            if (getCommentKey(comment) !== commentKey) {
+              return comment;
+            }
+
+            if (!canEditComment(comment)) {
+              throw new Error("You do not have permission to edit this reply.");
+            }
+
+            return {
+              ...comment,
+              content: nextContent,
+            };
+          });
+
+          if (!article || !nextComments) {
+            throw new Error("Reply not found.");
+          }
+
+          await saveArticleComments(articleId, nextComments);
+          editingCommentId = null;
+          articleFlash = {
+            message: "Reply updated successfully.",
+            kind: "success",
+          };
+          await renderArticle();
+        } catch (error) {
+          console.error("Error updating reply:", error);
+          articleFlash = {
+            message: "Unable to update this reply right now.",
+            kind: "error",
+          };
+          renderArticle();
+        }
+      }
+
+      async function removeComment(commentId) {
+        const articleId = getArticleIdFromUrl();
+        const commentKey = String(commentId);
+        const comment = currentArticle?.comments?.find((item) => getCommentKey(item) === commentKey);
+
+        if (!comment || !canRemoveComment(comment)) {
+          return;
+        }
+
+        const confirmed = window.confirm("Remove this reply? This action cannot be undone.");
+        if (!confirmed) {
+          return;
+        }
+
+        try {
+          const { article } = await loadArticleData(articleId);
+          if (!article) {
+            throw new Error("Article not found.");
+          }
+
+          const commentToRemove = article.comments.find((item) => getCommentKey(item) === commentKey);
+          if (!commentToRemove || !canRemoveComment(commentToRemove)) {
+            throw new Error("You do not have permission to remove this reply.");
+          }
+
+          const nextComments = article.comments.filter((item) => getCommentKey(item) !== commentKey);
+          await saveArticleComments(articleId, nextComments);
+          editingCommentId = null;
+          articleFlash = {
+            message: "Reply removed successfully.",
+            kind: "success",
+          };
+          await renderArticle();
+        } catch (error) {
+          console.error("Error removing reply:", error);
+          articleFlash = {
+            message: "Unable to remove this reply right now.",
+            kind: "error",
+          };
+          renderArticle();
+        }
+      }
+
+      function buildArticleView(article) {
+        if (!article) {
+          return `
+                    <div class="text-center py-12">
+                        <h2 class="text-2xl font-bold font-serif text-amber-900 mb-2">Article not found</h2>
+                        <button onclick="goHome()" class="text-amber-600 hover:underline decoration-2 font-bold">Return Home</button>
+                    </div>
+                `;
+        }
+
+        const comments = Array.isArray(article.comments) ? article.comments : [];
+        const canEditCurrentArticle = canEditArticle(article);
+        const canRemoveCurrentArticle = canRemoveArticle(article);
+
+        let html = `
+                <div class="fade-in max-w-4xl mx-auto">
+                    <!-- Back Button -->
+                    <button onclick="goHome()" class="flex items-center text-sm font-bold text-stone-500 hover:text-amber-600 transition-colors mb-6 group">
+                      <i data-lucide="arrow-left" class="h-4 w-4 mr-1 group-hover:-translate-x-1 transition-transform"></i> Back to articles
+                    </button>
+
+                    ${buildFlashMessage()}
+
+                    <!-- Main Post -->
+                    <div class="bg-white/95 rounded-xl shadow-sm border-2 border-amber-100 overflow-hidden mb-8">
+                        <div class="p-6 sm:p-8">
+                            <div class="flex flex-col gap-4 mb-6 sm:flex-row sm:items-start sm:justify-between">
+                                <h1 class="text-3xl sm:text-4xl font-bold font-serif text-amber-900">${escapeHTML(article.title)}</h1>
+                                ${
+                                  canEditCurrentArticle || canRemoveCurrentArticle
+                                    ? `
+                                <div class="flex flex-wrap gap-2">
+                                    ${
+                                      canEditCurrentArticle
+                                        ? `
+                                    <button type="button" onclick="startArticleEdit()" class="inline-flex items-center rounded-lg border border-amber-200 bg-amber-50 px-4 py-2 text-sm font-bold text-amber-800 transition-colors hover:bg-amber-100">
+                                      <i data-lucide="pencil" class="h-4 w-4 mr-2"></i> Edit
+                                    </button>
+                                    `
+                                        : ""
+                                    }
+                                    ${
+                                      canRemoveCurrentArticle
+                                        ? `
+                                    <button type="button" onclick="startArticleRemoval()" class="inline-flex items-center rounded-lg border border-red-200 bg-red-50 px-4 py-2 text-sm font-bold text-red-700 transition-colors hover:bg-red-100">
+                                      <i data-lucide="trash-2" class="h-4 w-4 mr-2"></i> Remove
+                                    </button>
+                                    `
+                                        : ""
+                                    }
+                                </div>
+                                `
+                                    : ""
+                                }
+                            </div>
+                            
+                            <div class="flex items-center gap-4 mb-4 pb-4 border-b-2 border-amber-50">
+                                ${buildAvatar(article.author, article.authorPhotoURL, "w-12 h-12", "text-lg")}
+                                <div>
+                                    <div class="font-bold text-stone-900 text-lg">${buildProfileLink(article.author, article.authorUid)}</div>
+                                    <div class="text-sm text-stone-500 font-medium flex items-center">
+                                        <i data-lucide="calendar" class="h-3.5 w-3.5 mr-1.5"></i> Posted ${timeAgo(article.createdAt)}
+                                    </div>
+                                </div>
+                            </div>
+
+                            ${
+                              isConfirmingArticleRemoval
+                                ? `
+                            <div class="mb-6 rounded-xl border border-red-200 bg-red-50 p-5">
+                                <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                                    <div>
+                                        <h2 class="text-base font-bold text-red-700">Remove This Article?</h2>
+                                        <p class="mt-1 text-sm text-red-600">This action cannot be undone.</p>
+                                    </div>
+                                    <div class="flex flex-wrap gap-2">
+                                        <button type="button" onclick="cancelArticleRemoval()" class="rounded-lg border border-stone-200 bg-white px-4 py-2 text-sm font-bold text-stone-600 transition-colors hover:bg-stone-50">Cancel</button>
+                                        <button type="button" onclick="removeArticle()" class="inline-flex items-center rounded-lg bg-red-600 px-4 py-2 text-sm font-bold text-white transition-colors hover:bg-red-700">
+                                            <i data-lucide="trash-2" class="h-4 w-4 mr-2"></i> Confirm Remove
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            `
+                                : ""
+                            }
+                            ${
+                              isEditingArticle
+                                ? `
+                            <div class="rounded-xl border-2 border-amber-200 bg-[#fffbf0] p-5">
+                                <div class="mb-4">
+                                    <label for="article-edit-title" class="mb-2 block text-sm font-bold text-stone-700">Article Title</label>
+                                    <input id="article-edit-title" type="text" value="${escapeHTML(article.title)}" class="w-full rounded-lg border-2 border-amber-100 bg-white px-4 py-3 text-lg text-stone-800 outline-none transition-all focus:border-amber-400">
+                                </div>
+                                <div class="mb-4">
+                                    <label for="article-edit-content" class="mb-2 block text-sm font-bold text-stone-700">Article Content</label>
+                                    <textarea id="article-edit-content" rows="10" class="w-full rounded-lg border-2 border-amber-100 bg-white px-4 py-3 text-base text-stone-800 outline-none transition-all focus:border-amber-400">${escapeHTML(article.content)}</textarea>
+                                </div>
+                                <div class="flex flex-wrap justify-end gap-2">
+                                    <button type="button" onclick="cancelArticleEdit()" class="rounded-lg border border-stone-200 px-4 py-2 text-sm font-bold text-stone-600 transition-colors hover:bg-stone-50">Cancel</button>
+                                    <button type="button" onclick="saveArticleEdit()" class="inline-flex items-center rounded-lg bg-amber-500 px-4 py-2 text-sm font-bold text-white transition-colors hover:bg-amber-600">
+                                        <i data-lucide="save" class="h-4 w-4 mr-2"></i> Save Changes
+                                    </button>
+                                </div>
+                            </div>
+                            `
+                                : `
+                            <div class="prose max-w-none text-stone-800 leading-relaxed text-lg">
+                                ${escapeHTML(article.content)}
+                            </div>
+                            `
+                            }
+                        </div>
+                    </div>
+
+                    <!-- Comments Section -->
+                    <div class="mb-8">
+                        <h3 class="text-xl font-bold font-serif text-amber-900 mb-4 flex items-center gap-2">
+                            <i data-lucide="messages-square" class="h-6 w-6 text-amber-500"></i>
+                            Comments (${comments.length})
+                        </h3>
+                        
+                        <div class="space-y-4">
+            `;
+
+        if (comments.length === 0) {
+          html += `
+                    <div class="text-center py-8 bg-white/60 rounded-xl border-2 border-dashed border-amber-200">
+                        <p class="text-stone-500 font-medium">No comments yet. Be the first to share your thoughts!</p>
+                    </div>
+                `;
+        } else {
+          comments.forEach((comment) => {
+            const canEditCurrentComment = canEditComment(comment);
+            const canRemoveCurrentComment = canRemoveComment(comment);
+            const commentKey = getCommentKey(comment);
+            const isEditingCurrentComment = editingCommentId === commentKey;
+
+            html += `
+                        <div class="bg-white/95 rounded-xl shadow-sm border-2 border-amber-100 p-5 flex gap-4">
+                            ${buildAvatar(comment.author, comment.authorPhotoURL, "flex-shrink-0 w-10 h-10 mt-1", "text-sm")}
+                            <div class="flex-grow">
+                                <div class="flex flex-col gap-1 mb-1 sm:flex-row sm:items-start sm:justify-between">
+                                    <div class="flex items-baseline gap-3">
+                                        <span class="font-bold text-stone-900">${buildProfileLink(comment.author, comment.authorUid)}</span>
+                                        <span class="text-xs font-medium text-stone-400">${timeAgo(comment.createdAt)}</span>
+                                    </div>
+                                    ${
+                                      canEditCurrentComment || canRemoveCurrentComment
+                                        ? `
+                                    <div class="flex flex-wrap gap-2">
+                                        ${
+                                          canEditCurrentComment
+                                            ? `
+                                        <button type="button" onclick="startCommentEdit('${escapeHTML(commentKey)}')" class="inline-flex items-center rounded-lg border border-amber-200 bg-amber-50 px-3 py-1.5 text-xs font-bold text-amber-800 transition-colors hover:bg-amber-100">
+                                            <i data-lucide="pencil" class="h-3.5 w-3.5 mr-1.5"></i> Edit
+                                        </button>
+                                        `
+                                            : ""
+                                        }
+                                        ${
+                                          canRemoveCurrentComment
+                                            ? `
+                                        <button type="button" onclick="removeComment('${escapeHTML(commentKey)}')" class="inline-flex items-center rounded-lg border border-red-200 bg-red-50 px-3 py-1.5 text-xs font-bold text-red-700 transition-colors hover:bg-red-100">
+                                            <i data-lucide="trash-2" class="h-3.5 w-3.5 mr-1.5"></i> Remove
+                                        </button>
+                                        `
+                                            : ""
+                                        }
+                                    </div>
+                                    `
+                                        : ""
+                                    }
+                                </div>
+                                ${
+                                  isEditingCurrentComment
+                                    ? `
+                                <div class="rounded-xl border border-amber-200 bg-[#fffbf0] p-4">
+                                    <textarea id="comment-edit-content-${escapeHTML(commentKey)}" rows="4" class="mb-3 w-full rounded-lg border-2 border-amber-100 bg-white px-4 py-3 text-base text-stone-800 outline-none transition-all focus:border-amber-400">${escapeHTML(comment.content)}</textarea>
+                                    <div class="flex flex-wrap justify-end gap-2">
+                                        <button type="button" onclick="cancelCommentEdit()" class="rounded-lg border border-stone-200 px-4 py-2 text-sm font-bold text-stone-600 transition-colors hover:bg-stone-50">Cancel</button>
+                                        <button type="button" onclick="saveCommentEdit('${escapeHTML(commentKey)}')" class="inline-flex items-center rounded-lg bg-amber-500 px-4 py-2 text-sm font-bold text-white transition-colors hover:bg-amber-600">
+                                            <i data-lucide="save" class="h-4 w-4 mr-2"></i> Save Changes
+                                        </button>
+                                    </div>
+                                </div>
+                                `
+                                    : `
+                                <div class="text-stone-700 text-base leading-relaxed">
+                                    ${escapeHTML(comment.content)}
+                                </div>
+                                `
+                                }
+                            </div>
+                        </div>
+                    `;
+          });
+        }
+
+        html += `
+                        </div>
+                    </div>
+
+                    <!-- Add Comment Form -->
+                    <div class="bg-[#fffbf0] rounded-xl border-2 border-amber-200 p-6 shadow-sm">
+                        <h4 class="font-bold font-serif text-amber-900 text-lg mb-4">Leave a Reply</h4>
+                        <form id="comment-form" onsubmit="handleAddComment(event)">
+                            <div class="mb-4">
+                                <input type="text" id="comment-author" required class="w-full sm:w-1/2 px-4 py-2 border-2 border-amber-100 bg-white/80 rounded-lg focus:ring-0 focus:border-amber-400 outline-none transition-all shadow-sm font-medium text-stone-800" placeholder="Your Name" ${window.currentUser ? `value="${escapeHTML(window.currentUser.displayName)}" disabled` : ''}>
+                            </div>
+                            <div class="mb-4">
+                                <textarea id="comment-content" required rows="3" class="w-full px-4 py-2 border-2 border-amber-100 bg-white/80 rounded-lg focus:ring-0 focus:border-amber-400 outline-none transition-all resize-none shadow-sm text-stone-800" placeholder="Write your comment here..."></textarea>
+                            </div>
+                            <div class="flex justify-end">
+                                <button type="submit" class="px-6 py-2 bg-amber-500 hover:bg-amber-600 text-white rounded-lg font-bold transition-colors shadow-sm flex items-center">
+                                    <i data-lucide="send" class="h-4 w-4 mr-2"></i> Post Reply
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            `;
+
+        return html;
+      }
+
+      async function renderArticle() {
+        const articleId = getArticleIdFromUrl();
+
+        try {
+          const { article } = await loadArticleData(articleId);
+          currentArticle = article;
+          document.title = article?.title
+            ? `${decodeHTML(article.title)} | HowTo?`
+            : "Article | HowTo?";
+
+          const container = document.getElementById("app-container");
+          container.innerHTML = buildArticleView(article);
+          lucide.createIcons();
+        } catch (error) {
+          console.error("Error fetching article:", error);
+          document.title = "Article Not Found";
+          const container = document.getElementById("app-container");
+          container.innerHTML = buildArticleView(null);
+          lucide.createIcons();
+        }
+      }
+
+      // Make functions available globally
+      window.goHome = goHome;
+      window.goToLanding = goToLanding;
+      window.handleAddComment = handleAddComment;
+      window.startArticleEdit = startArticleEdit;
+      window.cancelArticleEdit = cancelArticleEdit;
+      window.startArticleRemoval = startArticleRemoval;
+      window.cancelArticleRemoval = cancelArticleRemoval;
+      window.saveArticleEdit = saveArticleEdit;
+      window.removeArticle = removeArticle;
+      window.startCommentEdit = startCommentEdit;
+      window.cancelCommentEdit = cancelCommentEdit;
+      window.saveCommentEdit = saveCommentEdit;
+      window.removeComment = removeComment;
+
+      // Initialize on page load
+      document.addEventListener("DOMContentLoaded", async () => {
+        onAuthStateChanged(auth, async (user) => {
+          window.currentUser = user;
+          currentUserProfile = await loadCurrentUserProfile(user);
+          await renderArticle();
+        });
+        await renderArticle();
+      });
+    </script>
+  </body>
+</html>

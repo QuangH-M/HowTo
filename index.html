@@ -1,0 +1,732 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Articles | HowTo?</title>
+    <link rel="icon" type="image/x-icon" href="./logo.png">
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+      :root {
+        --gold-light: #ead7b0;
+        --gold-primary: #9f7528;
+        --gold-dark: #6e5018;
+        --paper-white: #ffffff;
+        --ink-black: #2c2c2c;
+        --line-soft: #e0e7ff;
+        --border-soft: #e5ddd0;
+      }
+      /* Custom scrollbar for a polished look */
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #ecebe7;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: var(--gold-primary);
+        border-radius: 4px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: var(--gold-dark);
+      }
+      /* Fade in animation */
+      .fade-in {
+        animation: fadeIn 0.3s ease-in-out;
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      /* Notebook aesthetic background */
+      body {
+        background-color: var(--gold-light);
+        background-image: radial-gradient(var(--gold-primary) 0.5px, transparent 0.5px);
+        background-size: 20px 20px;
+        font-family: "EB Garamond", serif;
+        position: relative;
+      }
+      body::before {
+        display: none;
+      }
+      @media (min-width: 640px) {
+        body::before {
+          left: 8%;
+        }
+      }
+      @media (min-width: 1024px) {
+        body::before {
+          left: 15%;
+        }
+      }
+      .bg-white\/95,
+      .bg-white\/90,
+      .bg-white\/80,
+      .bg-white {
+        background-color: rgba(255, 255, 255, 0.94) !important;
+      }
+      nav,
+      footer,
+      main {
+        font-family: "Inter", sans-serif;
+      }
+      main {
+        background: rgba(255, 255, 255, 0.96);
+        box-shadow:
+          0 10px 30px rgba(0, 0, 0, 0.1),
+          5px 5px 0px var(--gold-dark),
+          10px 10px 0px var(--gold-primary);
+        border-radius: 4px;
+        margin-top: 2rem;
+        margin-bottom: 2.5rem;
+      }
+      .brand-wordmark {
+        font-family: "EB Garamond", serif;
+        font-size: 2rem;
+        font-weight: 800;
+        color: var(--ink-black);
+      }
+      .brand-wordmark span {
+        color: var(--gold-primary);
+      }
+      button.bg-stone-900,
+      a.bg-stone-900,
+      button.bg-amber-500,
+      a.bg-amber-500 {
+        background-color: var(--ink-black) !important;
+        color: var(--paper-white) !important;
+        border: 1px solid var(--ink-black) !important;
+        transition: all 0.3s ease !important;
+      }
+      button.bg-stone-900:hover,
+      a.bg-stone-900:hover,
+      button.bg-amber-500:hover,
+      a.bg-amber-500:hover {
+        background-color: var(--gold-primary) !important;
+        border-color: var(--gold-primary) !important;
+        transform: translateY(-2px);
+      }
+      button.bg-stone-50,
+      a.bg-stone-50,
+      button.bg-amber-50,
+      a.bg-amber-50 {
+        background-color: transparent !important;
+        color: var(--ink-black) !important;
+        border: 1px solid var(--gold-light) !important;
+        transition: all 0.3s ease !important;
+      }
+      button.bg-stone-50:hover,
+      a.bg-stone-50:hover,
+      button.bg-amber-50:hover,
+      a.bg-amber-50:hover {
+        background-color: var(--gold-light) !important;
+        border-color: var(--gold-light) !important;
+        transform: translateY(-2px);
+      }
+      button.bg-red-500,
+      button.bg-red-600,
+      button.bg-red-50,
+      a.bg-red-50 {
+        transition: all 0.3s ease !important;
+      }
+      button.bg-red-500:hover,
+      button.bg-red-600:hover,
+      button.bg-red-50:hover,
+      a.bg-red-50:hover {
+        transform: translateY(-2px);
+      }
+      .home-search {
+        min-width: 220px;
+      }
+      .home-search input {
+        width: 100%;
+        border: 1px solid var(--gold-light);
+        background: rgba(255, 255, 255, 0.92);
+        padding: 0.65rem 0.9rem;
+        border-radius: 2px;
+        outline: none;
+        transition: border-color 0.2s ease, box-shadow 0.2s ease;
+      }
+      .home-search input:focus {
+        border-color: var(--gold-primary);
+        box-shadow: 0 0 0 3px rgba(159, 117, 40, 0.12);
+      }
+      .text-amber-900,
+      .text-amber-800 {
+        color: var(--gold-dark) !important;
+      }
+      .text-amber-700,
+      .text-amber-600,
+      .text-amber-500,
+      .text-amber-400 {
+        color: var(--gold-primary) !important;
+      }
+      .text-stone-900 {
+        color: var(--ink-black) !important;
+      }
+      .text-stone-800 {
+        color: #343434 !important;
+      }
+      .text-stone-700 {
+        color: #4a4a4a !important;
+      }
+      .text-stone-600,
+      .text-stone-500 {
+        color: #676767 !important;
+      }
+      .text-stone-400 {
+        color: #8b8b8b !important;
+      }
+      .bg-amber-50 {
+        background-color: var(--gold-light) !important;
+      }
+      .bg-amber-100 {
+        background-color: #f3e7cf !important;
+      }
+      .bg-amber-500 {
+        background-color: var(--gold-primary) !important;
+      }
+      .border-amber-50 {
+        border-color: #f6efe2 !important;
+      }
+      .border-amber-100 {
+        border-color: #efe5d2 !important;
+      }
+      .border-amber-200 {
+        border-color: var(--border-soft) !important;
+      }
+      .border-amber-300 {
+        border-color: #d8c4a0 !important;
+      }
+      .hover\:bg-amber-100:hover {
+        background-color: #f3e7cf !important;
+      }
+      .hover\:bg-amber-600:hover {
+        background-color: var(--gold-dark) !important;
+      }
+      .hover\:border-amber-300:hover {
+        border-color: var(--gold-primary) !important;
+      }
+      .hover\:text-amber-700:hover,
+      .hover\:text-amber-600:hover {
+        color: var(--gold-dark) !important;
+      }
+      .focus\:border-amber-400:focus {
+        border-color: var(--gold-primary) !important;
+      }
+      .group:hover .group-hover\:text-amber-600 {
+        color: var(--gold-primary) !important;
+      }
+      [class*="bg-[#fffbf0]"] {
+        background-color: #fcf8ef !important;
+      }
+      @media (max-width: 900px) {
+        main {
+          margin-left: 1rem;
+          margin-right: 1rem;
+        }
+      }
+    </style>
+  </head>
+  <body class="text-stone-800 font-sans min-h-screen flex flex-col">
+    <!-- Navigation Bar -->
+    <nav
+      class="bg-white/90 backdrop-blur-md border-b-2 border-amber-200 text-amber-700 shadow-sm sticky top-0 z-10"
+    >
+      <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-wrap justify-between gap-3 py-3 items-center">
+          <div class="flex items-center cursor-pointer shrink-0" onclick="goToLanding()">
+            <i data-lucide="book-open" class="h-8 w-8 mr-2 text-amber-500"></i>
+            <span class="brand-wordmark">How<span>To?</span></span>
+          </div>
+          <div class="home-search flex-1 min-w-[220px] max-w-xl">
+            <input
+              type="search"
+              id="article-search"
+              placeholder="Search article titles..."
+              oninput="handleSearchInput(event)"
+            />
+          </div>
+          <div class="flex items-center gap-3 shrink-0">
+            <a
+              href="create.html"
+              class="bg-stone-900 text-white hover:bg-amber-500 border border-stone-900 hover:border-amber-500 px-4 py-2 rounded-lg font-medium transition-colors flex items-center text-sm shadow-sm inline-flex"
+            >
+              <i data-lucide="plus" class="h-4 w-4 mr-1"></i> New Article
+            </a>
+            <a
+              id="auth-button"
+              href="login.html"
+              class="bg-stone-900 text-white hover:bg-amber-500 border border-stone-900 hover:border-amber-500 px-4 py-2 rounded-lg font-medium transition-colors flex items-center text-sm shadow-sm inline-flex"
+            >
+              <i data-lucide="user" class="h-4 w-4 mr-1"></i> Login
+            </a>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main
+      class="flex-grow max-w-5xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 relative z-0"
+      id="app-container"
+    >
+      <!-- Content will be injected here by JavaScript -->
+    </main>
+
+    <!-- Footer -->
+    <footer
+      class="bg-white/80 backdrop-blur-sm border-t-2 border-amber-200 mt-auto relative z-10"
+    >
+      <div
+        class="max-w-5xl mx-auto px-4 py-6 text-center text-stone-500 text-sm font-medium"
+      >
+        &copy; 2026 HowTo. Built for community discussions.
+      </div>
+    </footer>
+
+    <script type="module">
+      import {
+        initializeApp,
+        getApps,
+      } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
+      import {
+        getAuth,
+        onAuthStateChanged,
+      } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-auth.js";
+      import { getFirestore, collection, getDocs, orderBy, query } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js";
+
+      const firebaseConfig = {
+        apiKey: "AIzaSyCheSKMoXuUCQPzzKnkzj1NHMG8YXqIChY",
+        authDomain: "howto-d45bc.firebaseapp.com",
+        projectId: "howto-d45bc",
+        storageBucket: "howto-d45bc.firebasestorage.app",
+        messagingSenderId: "929511966384",
+        appId: "1:929511966384:web:3fe35c2267f4dbe779dd75",
+        measurementId: "G-9EXDTY4GB8",
+      };
+
+      let app;
+      if (getApps().length === 0) {
+        app = initializeApp(firebaseConfig);
+      } else {
+        app = getApps()[0];
+      }
+      const auth = getAuth(app);
+      const db = getFirestore(app);
+
+      window.firebaseAuth = auth;
+      window.firebaseDb = db;
+      // --- State Management ---
+      const state = {
+        view: "home", // 'home' or 'article'
+        activeArticleId: null,
+        articles: [],
+        searchQuery: "",
+      };
+      const PRIMARY_NAV_BUTTON_CLASSES = "bg-stone-900 text-white hover:bg-amber-500 border border-stone-900 hover:border-amber-500 px-4 py-2 rounded-lg font-medium transition-colors flex items-center text-sm shadow-sm inline-flex";
+      const SECONDARY_NAV_BUTTON_CLASSES = "bg-stone-50 text-stone-700 hover:bg-stone-100 border border-stone-200 px-4 py-2 rounded-lg font-medium transition-colors flex items-center text-sm shadow-sm inline-flex";
+
+      // Get articles from localStorage
+      function getArticlesFromStorage() {
+        const stored = localStorage.getItem("articles");
+        if (stored) {
+          return JSON.parse(stored);
+        }
+        // Initialize with default articles if localStorage is empty
+        saveArticlesToStorage(DEFAULT_ARTICLES);
+        return DEFAULT_ARTICLES;
+      }
+
+      // Save articles to localStorage
+      function saveArticlesToStorage(articles) {
+        localStorage.setItem("articles", JSON.stringify(articles));
+      }
+
+      // Load articles from storage on startup
+      async function loadArticles() {
+        try {
+          const articlesQuery = query(collection(window.firebaseDb, "articles"), orderBy("createdAt", "desc"));
+          const querySnapshot = await getDocs(articlesQuery);
+          
+          state.articles = [];
+          querySnapshot.forEach((doc) => {
+            const articleData = doc.data();
+            state.articles.push({
+              id: doc.id,
+              ...articleData,
+              createdAt: articleData.createdAt.toMillis ? articleData.createdAt.toMillis() : articleData.createdAt
+            });
+          });
+          
+          console.log("Loaded", state.articles.length, "articles from Firestore");
+        } catch (error) {
+          console.error("Error loading articles from Firestore:", error);
+          // Fallback to localStorage if Firestore fails
+          state.articles = getArticlesFromStorage();
+        }
+      }
+
+      // --- Helper Functions ---
+
+      // Simple HTML escaper to prevent XSS
+      function escapeHTML(str) {
+        const p = document.createElement("p");
+        p.appendChild(document.createTextNode(str));
+        return p.innerHTML;
+      }
+
+      // Generate initials for avatars
+      function getInitials(name) {
+        return name.substring(0, 2).toUpperCase();
+      }
+
+      // Get a consistent color based on string (for avatars)
+      function stringToColor(str) {
+        let hash = 0;
+        for (let i = 0; i < str.length; i++) {
+          hash = str.charCodeAt(i) + ((hash << 5) - hash);
+        }
+        const c = (hash & 0x00ffffff).toString(16).toUpperCase();
+        return "#" + "00000".substring(0, 6 - c.length) + c;
+      }
+
+      function buildAvatar(name, photoURL, sizeClasses, textClasses = "text-sm", extraClasses = "") {
+        const safeName = escapeHTML(name || "User");
+        const safePhotoURL = photoURL ? escapeHTML(photoURL) : "";
+        const classes = `rounded-full ${sizeClasses} ${extraClasses}`.trim();
+
+        if (safePhotoURL) {
+          return `<img src="${safePhotoURL}" alt="${safeName}" class="${classes} object-cover border border-amber-100 shadow-sm">`;
+        }
+
+        return `<div class="${classes} text-white flex items-center justify-center font-bold ${textClasses} shadow-inner border border-white/50" style="background-color: ${stringToColor(name || "User")}">
+            ${escapeHTML(getInitials(name || "U"))}
+          </div>`;
+      }
+
+      function getProfileUrl(userId) {
+        return `profile.html?id=${encodeURIComponent(userId)}`;
+      }
+
+      function buildProfileLink(name, userId, classes = "", stopPropagation = false) {
+        const safeName = escapeHTML(name || "User");
+        const safeClasses = classes || "";
+
+        if (!userId) {
+          return `<span class="${safeClasses}">${safeName}</span>`;
+        }
+
+        const stopClick = stopPropagation ? ' onclick="event.stopPropagation()"' : "";
+        return `<a href="${getProfileUrl(userId)}" class="${safeClasses} hover:text-amber-700 transition-colors"${stopClick}>${safeName}</a>`;
+      }
+
+      // Format relative time (e.g., "2 hours ago")
+      function timeAgo(timestamp) {
+        const seconds = Math.floor((new Date() - timestamp) / 1000);
+        let interval = seconds / 31536000;
+        if (interval > 1) return Math.floor(interval) + " years ago";
+        interval = seconds / 2592000;
+        if (interval > 1) return Math.floor(interval) + " months ago";
+        interval = seconds / 86400;
+        if (interval > 1) return Math.floor(interval) + " days ago";
+        interval = seconds / 3600;
+        if (interval > 1) return Math.floor(interval) + " hours ago";
+        interval = seconds / 60;
+        if (interval > 1) return Math.floor(interval) + " mins ago";
+        return Math.floor(seconds) + " seconds ago";
+      }
+
+      // --- Core Application Logic ---
+
+      async function init() {
+        await loadArticles();
+
+        // Monitor Firebase auth state
+        onAuthStateChanged(window.firebaseAuth, (user) => {
+          window.currentUser = user;
+          const authButton = document.getElementById('auth-button');
+          if (user) {
+            console.log("Current user ID from Firebase:", user.uid);
+            console.log("Current user name:", user.displayName);
+            console.log("Current user email:", user.email);
+            authButton.innerHTML = '<i data-lucide="user" class="h-4 w-4 mr-1"></i> Profile';
+            authButton.href = getProfileUrl(user.uid);
+            authButton.className = SECONDARY_NAV_BUTTON_CLASSES;
+          } else {
+            authButton.innerHTML = '<i data-lucide="user" class="h-4 w-4 mr-1"></i> Login';
+            authButton.href = 'login.html';
+            authButton.className = PRIMARY_NAV_BUTTON_CLASSES;
+          }
+          lucide.createIcons();
+          render();
+        });
+
+        render();
+      }
+
+      function goHome() {
+        state.view = "home";
+        state.activeArticleId = null;
+        render();
+        window.scrollTo(0, 0);
+      }
+
+      function goToLanding() {
+        window.location.href = "home.html";
+      }
+
+      function handleSearchInput(event) {
+        state.searchQuery = event.target.value.trim().toLowerCase();
+        render();
+      }
+
+      function goToArticle(id) {
+        state.view = "article";
+        state.activeArticleId = id;
+        render();
+        window.scrollTo(0, 0);
+      }
+
+      function goToInfo(id) {
+        window.location.href = `info.html?id=${id}`;
+      }
+
+      function handleAddComment(e) {
+        e.preventDefault();
+        const author = window.currentUser ? window.currentUser.displayName : document.getElementById("comment-author").value;
+        const content = document.getElementById("comment-content").value;
+
+        const article = state.articles.find(
+          (a) => a.id === state.activeArticleId,
+        );
+        if (!article) return;
+
+        const newComment = {
+          id: Date.now(),
+          author: author,
+          authorUid: window.currentUser?.uid || null,
+          authorPhotoURL: window.currentUser?.photoURL || null,
+          content: content,
+          createdAt: Date.now(),
+        };
+
+        article.comments.push(newComment);
+
+        // Save updated articles to localStorage
+        saveArticlesToStorage(state.articles);
+
+        // Clear form and re-render article
+        document.getElementById("comment-form").reset();
+        render();
+
+        // Scroll to bottom to see new comment
+        setTimeout(() => {
+          window.scrollTo(0, document.body.scrollHeight);
+        }, 50);
+      }
+
+      // --- Rendering ---
+
+      function render() {
+        const container = document.getElementById("app-container");
+
+        if (state.view === "home") {
+          container.innerHTML = buildHomeView();
+        } else if (state.view === "article") {
+          container.innerHTML = buildArticleView();
+        }
+
+        // Re-initialize Lucide icons for newly injected HTML
+        lucide.createIcons();
+      }
+
+      function buildHomeView() {
+        const filteredArticles = state.articles.filter((article) =>
+          !state.searchQuery || (article.title || "").toLowerCase().includes(state.searchQuery),
+        );
+
+        let html = `
+                <div class="flex items-center justify-between mb-6 fade-in">
+                  <h1 class="text-3xl font-bold text-amber-900 font-serif">Latest Articles</h1>
+                    <span class="text-sm font-medium text-white bg-stone-900 px-3 py-1 rounded-full border border-stone-900">${filteredArticles.length} ${filteredArticles.length === 1 ? "Article" : "Articles"}</span>
+                </div>
+                <div class="space-y-5 fade-in">
+            `;
+
+        if (filteredArticles.length === 0) {
+          html += `
+                    <div class="bg-white/90 rounded-xl shadow-sm border-2 border-amber-100 p-12 text-center">
+                        <div class="mx-auto w-16 h-16 bg-amber-50 rounded-full flex items-center justify-center mb-4 border border-amber-100">
+                            <i data-lucide="book-dashed" class="h-8 w-8 text-amber-400"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-stone-900 mb-1">${state.searchQuery ? "No matching articles" : "No articles yet"}</h3>
+                        <p class="text-stone-500 mb-4">${state.searchQuery ? "Try a different title search." : "Be the first to start a conversation!"}</p>
+                        <a href="create.html" class="text-amber-600 font-bold hover:text-amber-700 underline decoration-2 underline-offset-4">Create an Article</a>
+                    </div>
+                `;
+        } else {
+          filteredArticles.forEach((article) => {
+            html += `
+                        <div class="bg-white/95 rounded-xl shadow-sm border-2 border-amber-100 p-5 hover:shadow-md hover:border-amber-300 transition-all cursor-pointer group" onclick="goToInfo('${article.id}')" id="article-${article.id}">
+                            <div class="flex items-start gap-4">
+                                <div class="hidden sm:block flex-shrink-0">
+                                    ${buildAvatar(article.author, article.authorPhotoURL, "w-12 h-12", "text-lg")}
+                                </div>
+                                <div class="flex-grow min-w-0">
+                                    <div class="flex items-center gap-2 mb-1">
+                                        <div class="sm:hidden">
+                                            ${buildAvatar(article.author, article.authorPhotoURL, "w-6 h-6", "text-xs")}
+                                        </div>
+                                        ${buildProfileLink(article.author, article.authorUid, "text-sm font-bold text-stone-800", true)}
+                                        <span class="text-xs text-stone-400 flex items-center font-medium">
+                                            <i data-lucide="clock" class="h-3 w-3 mr-1"></i> ${timeAgo(article.createdAt)}
+                                        </span>
+                                    </div>
+                                    <h2 class="text-xl font-bold font-serif text-amber-900 mb-2 group-hover:text-amber-600 transition-colors line-clamp-1">${escapeHTML(article.title)}</h2>
+                                    <p class="text-stone-600 text-sm line-clamp-2 mb-3">
+                                        ${escapeHTML(article.content)}
+                                    </p>
+                                    <div class="flex items-center gap-4 text-sm text-stone-500 font-medium">
+                                        <div class="flex items-center gap-1.5 ${article.comments.length > 0 ? "text-amber-600" : ""}">
+                                            <i data-lucide="message-circle" class="h-4 w-4"></i>
+                                            ${article.comments.length} ${article.comments.length === 1 ? "reply" : "replies"}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+          });
+        }
+
+        html += `</div>`;
+        return html;
+      }
+
+      function buildArticleView() {
+        const article = state.articles.find(
+          (a) => a.id === state.activeArticleId,
+        );
+        if (!article) {
+          return `
+                    <div class="text-center py-12">
+                        <h2 class="text-2xl font-bold font-serif text-amber-900 mb-2">Article not found</h2>
+                        <button onclick="goHome()" class="text-amber-600 hover:underline decoration-2 font-bold">Return Home</button>
+                    </div>
+                `;
+        }
+
+        let html = `
+                <div class="fade-in max-w-4xl mx-auto">
+                    <!-- Back Button -->
+                    <button onclick="goHome()" class="flex items-center text-sm font-bold text-stone-500 hover:text-amber-600 transition-colors mb-6 group">
+                      <i data-lucide="arrow-left" class="h-4 w-4 mr-1 group-hover:-translate-x-1 transition-transform"></i> Back to articles
+                    </button>
+
+                    <!-- Main Post -->
+                    <div class="bg-white/95 rounded-xl shadow-sm border-2 border-amber-100 overflow-hidden mb-8">
+                        <div class="p-6 sm:p-8">
+                            <h1 class="text-3xl sm:text-4xl font-bold font-serif text-amber-900 mb-6">${escapeHTML(article.title)}</h1>
+                            
+                            <div class="flex items-center gap-4 mb-6 pb-6 border-b-2 border-amber-50">
+                                ${buildAvatar(article.author, article.authorPhotoURL, "w-12 h-12", "text-lg")}
+                                <div>
+                                    <div class="font-bold text-stone-900 text-lg">${buildProfileLink(article.author, article.authorUid)}</div>
+                                    <div class="text-sm text-stone-500 font-medium flex items-center">
+                                        <i data-lucide="calendar" class="h-3.5 w-3.5 mr-1.5"></i> Posted ${timeAgo(article.createdAt)}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="prose max-w-none text-stone-800 whitespace-pre-wrap leading-relaxed text-lg">
+                                ${escapeHTML(article.content)}
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Comments Section -->
+                    <div class="mb-8">
+                        <h3 class="text-xl font-bold font-serif text-amber-900 mb-4 flex items-center gap-2">
+                            <i data-lucide="messages-square" class="h-6 w-6 text-amber-500"></i>
+                            Comments (${article.comments.length})
+                        </h3>
+                        
+                        <div class="space-y-4">
+            `;
+
+        if (article.comments.length === 0) {
+          html += `
+                    <div class="text-center py-8 bg-white/60 rounded-xl border-2 border-dashed border-amber-200">
+                        <p class="text-stone-500 font-medium">No comments yet. Be the first to share your thoughts!</p>
+                    </div>
+                `;
+        } else {
+          article.comments.forEach((comment) => {
+            html += `
+                        <div class="bg-white/95 rounded-xl shadow-sm border-2 border-amber-100 p-5 flex gap-4">
+                            ${buildAvatar(comment.author, comment.authorPhotoURL, "flex-shrink-0 w-10 h-10 mt-1", "text-sm")}
+                            <div class="flex-grow">
+                                <div class="flex items-baseline justify-between mb-2">
+                                    <span class="font-bold text-stone-900">${buildProfileLink(comment.author, comment.authorUid)}</span>
+                                    <span class="text-xs font-medium text-stone-400">${timeAgo(comment.createdAt)}</span>
+                                </div>
+                                <div class="text-stone-700 text-base whitespace-pre-wrap leading-relaxed">
+                                    ${escapeHTML(comment.content)}
+                                </div>
+                            </div>
+                        </div>
+                    `;
+          });
+        }
+
+        html += `
+                        </div>
+                    </div>
+
+                    <!-- Add Comment Form -->
+                    <div class="bg-[#fffbf0] rounded-xl border-2 border-amber-200 p-6 shadow-sm">
+                        <h4 class="font-bold font-serif text-amber-900 text-lg mb-4">Leave a Reply</h4>
+                        <form id="comment-form" onsubmit="handleAddComment(event)">
+                            <div class="mb-4">
+                                <input type="text" id="comment-author" required class="w-full sm:w-1/2 px-4 py-2 border-2 border-amber-100 bg-white/80 rounded-lg focus:ring-0 focus:border-amber-400 outline-none transition-all shadow-sm font-medium text-stone-800" placeholder="Your Name" ${window.currentUser ? `value="${escapeHTML(window.currentUser.displayName)}" disabled` : ''}>
+                            </div>
+                            <div class="mb-4">
+                                <textarea id="comment-content" required rows="3" class="w-full px-4 py-2 border-2 border-amber-100 bg-white/80 rounded-lg focus:ring-0 focus:border-amber-400 outline-none transition-all resize-none shadow-sm text-stone-800" placeholder="Write your comment here..."></textarea>
+                            </div>
+                            <div class="flex justify-end">
+                                <button type="submit" class="px-6 py-2 bg-amber-500 hover:bg-amber-600 text-white rounded-lg font-bold transition-colors shadow-sm flex items-center">
+                                    <i data-lucide="send" class="h-4 w-4 mr-2"></i> Post Reply
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            `;
+
+        return html;
+      }
+
+      // Make functions available globally
+      window.goHome = goHome;
+      window.goToLanding = goToLanding;
+      window.handleSearchInput = handleSearchInput;
+      window.goToInfo = goToInfo;
+
+      // --- Start App ---
+      document.addEventListener("DOMContentLoaded", init);
+    </script>
+  </body>
+</html>
