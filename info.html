@@ -546,6 +546,16 @@
         return `<a href="${getProfileUrl(userId)}" class="${safeClasses} hover:text-amber-700 transition-colors">${safeName}</a>`;
       }
 
+      function buildArticleImage(article, className) {
+        if (!article?.imageUrl) {
+          return "";
+        }
+
+        const safeImageUrl = escapeHTML(article.imageUrl);
+        const safeAlt = escapeHTML(article.title || "Article image");
+        return `<img src="${safeImageUrl}" alt="${safeAlt}" class="${className}">`;
+      }
+
       // Format relative time (e.g., "2 hours ago")
       function timeAgo(timestamp) {
         const seconds = Math.floor((new Date() - timestamp) / 1000);
@@ -964,7 +974,16 @@
                             </div>
                             `
                                 : `
-                            <div class="prose max-w-none text-stone-800 leading-relaxed text-lg">
+                            ${
+                              article.imageUrl
+                                ? `
+                            <div class="mb-6 overflow-hidden rounded-xl border border-amber-100 bg-amber-50">
+                                ${buildArticleImage(article, "max-h-[30rem] w-full object-cover")}
+                            </div>
+                            `
+                                : ""
+                            }
+                            <div class="prose max-w-none whitespace-pre-wrap text-stone-800 leading-relaxed text-lg">
                                 ${escapeHTML(article.content)}
                             </div>
                             `
