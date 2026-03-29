@@ -302,7 +302,7 @@
               </p>
             </div>
 
-            <div class="flex gap-3 justify-between">
+            <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
               <button
                 type="button"
                 onclick="goHome()"
@@ -310,17 +310,101 @@
               >
                 Cancel
               </button>
-              <button
-                type="submit"
-                class="px-6 py-3 bg-amber-500 hover:bg-amber-600 text-white rounded-lg font-bold transition-colors shadow-sm flex items-center"
-              >
-                <i data-lucide="send" class="h-4 w-4 mr-2"></i> Post Article
-              </button>
+              <div class="flex flex-col items-start gap-2 sm:items-end">
+                <div class="flex flex-wrap items-center gap-3 text-sm">
+                  <span id="article-image-selection" class="text-stone-500"
+                    >No image selected.</span
+                  >
+                  <button
+                    id="remove-image-btn"
+                    type="button"
+                    onclick="removeSelectedArticleImage()"
+                    class="hidden font-medium text-red-600 hover:text-red-700"
+                  >
+                    Remove
+                  </button>
+                </div>
+                <div class="flex flex-wrap gap-3">
+                  <label
+                    class="inline-flex cursor-pointer items-center rounded-lg border border-amber-200 bg-amber-50 px-6 py-3 font-medium text-stone-700 transition-colors hover:bg-amber-100"
+                  >
+                    <i data-lucide="image-plus" class="mr-2 h-4 w-4"></i> Add
+                    Image
+                    <input
+                      id="article-image"
+                      type="file"
+                      accept="image/*"
+                      class="hidden"
+                      onchange="handleArticleImageSelection(event)"
+                    />
+                  </label>
+                  <button
+                    id="open-preview-btn"
+                    type="submit"
+                    class="px-6 py-3 bg-amber-500 hover:bg-amber-600 text-white rounded-lg font-bold transition-colors shadow-sm flex items-center"
+                  >
+                    <i data-lucide="send" class="h-4 w-4 mr-2"></i> Post Article
+                  </button>
+                </div>
+              </div>
             </div>
           </form>
         </div>
       </div>
     </main>
+
+    <div
+      id="article-preview-modal"
+      class="fixed inset-0 z-50 hidden items-center justify-center p-4"
+    >
+      <div
+        class="absolute inset-0 bg-stone-950/50 backdrop-blur-sm"
+        onclick="closeArticlePreview()"
+      ></div>
+      <div
+        class="relative z-10 flex max-h-[90vh] w-full max-w-3xl flex-col overflow-hidden rounded-2xl border-2 border-amber-200 bg-white shadow-2xl"
+      >
+        <div class="flex items-start justify-between gap-4 border-b border-amber-100 px-6 py-5">
+          <div>
+            <p class="text-xs font-bold uppercase tracking-[0.24em] text-amber-700">
+              Preview
+            </p>
+            <h2 class="mt-1 text-2xl font-bold font-serif text-amber-900">
+              Review Your Article
+            </h2>
+            <p class="mt-1 text-sm text-stone-500">
+              Check the final look before publishing.
+            </p>
+          </div>
+          <button
+            type="button"
+            onclick="closeArticlePreview()"
+            class="rounded-lg border border-stone-200 p-2 text-stone-500 transition-colors hover:bg-stone-50 hover:text-stone-700"
+            aria-label="Close preview"
+          >
+            <i data-lucide="x" class="h-5 w-5"></i>
+          </button>
+        </div>
+        <div id="article-preview-body" class="overflow-y-auto px-6 py-6 sm:px-8"></div>
+        <div class="flex flex-col-reverse gap-3 border-t border-amber-100 px-6 py-5 sm:flex-row sm:items-center sm:justify-end">
+          <button
+            type="button"
+            onclick="closeArticlePreview()"
+            class="rounded-lg border border-stone-200 px-5 py-3 font-medium text-stone-600 transition-colors hover:bg-stone-50"
+          >
+            Keep Editing
+          </button>
+          <button
+            id="confirm-post-btn"
+            type="button"
+            onclick="publishArticle()"
+            class="inline-flex items-center justify-center rounded-lg bg-amber-500 px-5 py-3 font-bold text-white transition-colors hover:bg-amber-600"
+          >
+            <i data-lucide="send" class="mr-2 h-4 w-4"></i> Publish Article
+          </button>
+        </div>
+      </div>
+    </div>
 
     <!-- Footer -->
     <footer
@@ -344,6 +428,8 @@
       } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-auth.js";
       import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js";
 
+      const CLOUDINARY_CLOUD_NAME = "dvmcxqdba";
+      const CLOUDINARY_UPLOAD_PRESET = "HowTo-PhotoLibrary";
       const firebaseConfig = {
         apiKey: "AIzaSyCheSKMoXuUCQPzzKnkzj1NHMG8YXqIChY",
         authDomain: "howto-d45bc.firebaseapp.com",
@@ -365,11 +451,229 @@
 
       window.firebaseAuth = auth;
       window.firebaseDb = db;
+      let selectedArticleImageFile = null;
+      let selectedArticleImagePreviewUrl = null;
+      let isPublishingArticle = false;
+
       // Simple HTML escaper to prevent XSS
       function escapeHTML(str) {
         const p = document.createElement("p");
-        p.appendChild(document.createTextNode(str));
+        p.appendChild(document.createTextNode(str || ""));
         return p.innerHTML;
+      }
+
+      function formatRichText(str) {
+        return escapeHTML(str).replace(/\n/g, "<br>");
+      }
+
+      function buildPreviewAvatar(name, photoURL) {
+        const safeName = escapeHTML(name || "User");
+        const initial = escapeHTML((name || "U").trim().charAt(0).toUpperCase() || "U");
+        const safePhotoURL = photoURL ? escapeHTML(photoURL) : "";
+
+        if (safePhotoURL) {
+          return `<img src="${safePhotoURL}" alt="${safeName}" class="h-12 w-12 rounded-full border border-amber-100 object-cover shadow-sm">`;
+        }
+
+        return `<div class="flex h-12 w-12 items-center justify-center rounded-full bg-amber-100 font-bold text-amber-800 shadow-inner">${initial}</div>`;
+      }
+
+      function getArticleDraftData() {
+        const title = document.getElementById("thread-title")?.value.trim() || "";
+        const authorInput = document.getElementById("thread-author");
+        const author = window.currentUser?.displayName || authorInput?.value.trim() || "";
+        const content = document.getElementById("thread-content")?.value.trim() || "";
+        const authorUid = window.currentUser?.uid || null;
+        const authorPhotoURL = window.currentUser?.photoURL || null;
+
+        return {
+          title,
+          author,
+          content,
+          authorUid,
+          authorPhotoURL,
+          imageUrl: selectedArticleImagePreviewUrl,
+        };
+      }
+
+      function renderArticlePreview() {
+        const previewBody = document.getElementById("article-preview-body");
+        if (!previewBody) {
+          return;
+        }
+
+        const draft = getArticleDraftData();
+        previewBody.innerHTML = `
+          <article class="rounded-xl border-2 border-amber-100 bg-white/95 shadow-sm overflow-hidden">
+            ${
+              draft.imageUrl
+                ? `
+            <img
+              src="${escapeHTML(draft.imageUrl)}"
+              alt="${escapeHTML(draft.title || "Article image preview")}"
+              class="h-72 w-full border-b border-amber-100 object-cover"
+            />
+            `
+                : ""
+            }
+            <div class="p-6 sm:p-8">
+              <h1 class="mb-6 text-3xl font-bold font-serif text-amber-900 sm:text-4xl">
+                ${escapeHTML(draft.title)}
+              </h1>
+              <div class="mb-6 flex items-center gap-4 border-b-2 border-amber-50 pb-6">
+                ${buildPreviewAvatar(draft.author, draft.authorPhotoURL)}
+                <div>
+                  <div class="text-lg font-bold text-stone-900">${escapeHTML(draft.author)}</div>
+                  <div class="flex items-center text-sm font-medium text-stone-500">
+                    <i data-lucide="calendar" class="mr-1.5 h-3.5 w-3.5"></i>
+                    Posted just now
+                  </div>
+                </div>
+              </div>
+              <div class="prose max-w-none whitespace-pre-wrap text-lg leading-relaxed text-stone-800">
+                ${formatRichText(draft.content)}
+              </div>
+            </div>
+          </article>
+        `;
+        lucide.createIcons();
+      }
+
+      function openArticlePreview() {
+        const modal = document.getElementById("article-preview-modal");
+        if (!modal) {
+          return;
+        }
+
+        renderArticlePreview();
+        modal.classList.remove("hidden");
+        modal.classList.add("flex");
+        document.body.classList.add("overflow-hidden");
+      }
+
+      function closeArticlePreview(force = false) {
+        const modal = document.getElementById("article-preview-modal");
+        if (!modal || (isPublishingArticle && !force)) {
+          return;
+        }
+
+        modal.classList.add("hidden");
+        modal.classList.remove("flex");
+        document.body.classList.remove("overflow-hidden");
+      }
+
+      function updateImageSelectionState() {
+        const label = document.getElementById("article-image-selection");
+        const removeButton = document.getElementById("remove-image-btn");
+
+        if (label) {
+          label.textContent = selectedArticleImageFile
+            ? `Selected image: ${selectedArticleImageFile.name}`
+            : "No image selected.";
+        }
+
+        if (removeButton) {
+          removeButton.classList.toggle("hidden", !selectedArticleImageFile);
+        }
+      }
+
+      function handleArticleImageSelection(event) {
+        const file = event.target.files?.[0] || null;
+
+        if (selectedArticleImagePreviewUrl) {
+          URL.revokeObjectURL(selectedArticleImagePreviewUrl);
+          selectedArticleImagePreviewUrl = null;
+        }
+
+        selectedArticleImageFile = file;
+        if (file) {
+          selectedArticleImagePreviewUrl = URL.createObjectURL(file);
+        }
+
+        updateImageSelectionState();
+      }
+
+      function removeSelectedArticleImage() {
+        const input = document.getElementById("article-image");
+        if (selectedArticleImagePreviewUrl) {
+          URL.revokeObjectURL(selectedArticleImagePreviewUrl);
+          selectedArticleImagePreviewUrl = null;
+        }
+
+        selectedArticleImageFile = null;
+        if (input) {
+          input.value = "";
+        }
+        updateImageSelectionState();
+      }
+
+      async function uploadArticleImage(file) {
+        const formData = new FormData();
+        formData.append("file", file);
+        formData.append("upload_preset", CLOUDINARY_UPLOAD_PRESET);
+
+        const response = await fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`, {
+          method: "POST",
+          body: formData,
+        });
+
+        const data = await response.json();
+        if (!response.ok || !data.secure_url) {
+          throw new Error(data?.error?.message || "Cloudinary upload failed.");
+        }
+
+        return data.secure_url;
+      }
+
+      function syncAuthorInputWithUser(user) {
+        const authorInput = document.getElementById("thread-author");
+        if (!authorInput) {
+          return;
+        }
+
+        if (user?.displayName) {
+          authorInput.value = user.displayName;
+          authorInput.disabled = true;
+          return;
+        }
+
+        authorInput.disabled = false;
+        if (!user) {
+          authorInput.value = "";
+        }
+      }
+
+      function setPublishingState(isPublishing) {
+        isPublishingArticle = isPublishing;
+
+        const previewButton = document.getElementById("open-preview-btn");
+        const confirmButton = document.getElementById("confirm-post-btn");
+        const imageInput = document.getElementById("article-image");
+        const titleInput = document.getElementById("thread-title");
+        const authorInput = document.getElementById("thread-author");
+        const contentInput = document.getElementById("thread-content");
+
+        if (previewButton) {
+          previewButton.disabled = isPublishing;
+          previewButton.innerHTML = isPublishing
+            ? `<i data-lucide="loader-circle" class="h-4 w-4 mr-2 animate-spin"></i>${selectedArticleImageFile ? "Uploading image..." : "Preparing..."}`
+            : `<i data-lucide="send" class="h-4 w-4 mr-2"></i> Post Article`;
+        }
+
+        if (confirmButton) {
+          confirmButton.disabled = isPublishing;
+          confirmButton.innerHTML = isPublishing
+            ? `<i data-lucide="loader-circle" class="mr-2 h-4 w-4 animate-spin"></i>${selectedArticleImageFile ? "Uploading & Publishing..." : "Publishing..."}`
+            : `<i data-lucide="send" class="mr-2 h-4 w-4"></i> Publish Article`;
+        }
+
+        [imageInput, titleInput, authorInput, contentInput].forEach((element) => {
+          if (element) {
+            element.disabled = isPublishing || (element === authorInput && Boolean(window.currentUser?.displayName));
+          }
+        });
+
+        lucide.createIcons();
       }
 
       // Get articles from localStorage
@@ -386,42 +690,63 @@
       // Create new article
       async function handleCreateArticle(e) {
         e.preventDefault();
-        const title = document.getElementById("thread-title").value.trim();
-        const author = window.currentUser ? window.currentUser.displayName : document.getElementById("thread-author").value.trim();
-        const content = document.getElementById("thread-content").value.trim();
-        const authorUid = window.currentUser?.uid || null;
-        const authorPhotoURL = window.currentUser?.photoURL || null;
+        const draft = getArticleDraftData();
+        if (!draft.title || !draft.author || !draft.content) {
+          return;
+        }
 
-        const newArticle = {
-          title: escapeHTML(title),
-          author: escapeHTML(author),
-          authorUid,
-          authorPhotoURL,
-          content: escapeHTML(content),
-          createdAt: new Date(),
-          comment: [],
-          comments: [],
-        };
+        openArticlePreview();
+      }
+
+      async function publishArticle() {
+        if (isPublishingArticle) {
+          return;
+        }
+
+        const draft = getArticleDraftData();
+        if (!draft.title || !draft.author || !draft.content) {
+          closeArticlePreview();
+          return;
+        }
+
+        setPublishingState(true);
 
         try {
-          // Save to Firestore
+          const imageUrl = selectedArticleImageFile
+            ? await uploadArticleImage(selectedArticleImageFile)
+            : null;
+
+          const newArticle = {
+            title: escapeHTML(draft.title),
+            author: escapeHTML(draft.author),
+            authorUid: draft.authorUid,
+            authorPhotoURL: draft.authorPhotoURL,
+            content: escapeHTML(draft.content),
+            imageUrl,
+            createdAt: new Date(),
+            comment: [],
+            comments: [],
+          };
+
           const docRef = await addDoc(collection(window.firebaseDb, "articles"), newArticle);
           console.log("Article saved to Firestore with ID: ", docRef.id);
 
-          // Show success message
           const successMsg = document.getElementById("success-message");
-          successMsg.classList.remove("hidden");
+          successMsg?.classList.remove("hidden");
 
-          // Reset form
-          document.getElementById("create-article-form").reset();
+          document.getElementById("create-article-form")?.reset();
+          removeSelectedArticleImage();
+          closeArticlePreview(true);
+          syncAuthorInputWithUser(window.currentUser);
 
-          // Redirect after delay
           setTimeout(() => {
             window.location.href = "index.html";
           }, 1500);
         } catch (error) {
           console.error("Error saving article to Firestore: ", error);
           alert("Error saving article. Please try again.");
+        } finally {
+          setPublishingState(false);
         }
       }
 
@@ -438,20 +763,19 @@
       window.goHome = goHome;
       window.goToLanding = goToLanding;
       window.handleCreateArticle = handleCreateArticle;
+      window.closeArticlePreview = closeArticlePreview;
+      window.publishArticle = publishArticle;
+      window.handleArticleImageSelection = handleArticleImageSelection;
+      window.removeSelectedArticleImage = removeSelectedArticleImage;
       document.addEventListener("DOMContentLoaded", () => {
         lucide.createIcons();
+        updateImageSelectionState();
       });
 
       // Prefill author if logged in
       onAuthStateChanged(auth, (user) => {
         window.currentUser = user;
-        const authorInput = document.getElementById("thread-author");
-        if (user && authorInput) {
-          authorInput.value = user.displayName;
-          authorInput.disabled = true;
-        } else if (authorInput) {
-          authorInput.disabled = false;
-        }
+        syncAuthorInputWithUser(user);
       });
     </script>
   </body>
