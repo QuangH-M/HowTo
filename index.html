@@ -343,16 +343,57 @@
       function getArticlesFromStorage() {
         const stored = localStorage.getItem("articles");
         if (stored) {
-          return JSON.parse(stored);
+          return JSON.parse(stored).map((article) => normalizeArticle(article));
         }
         // Initialize with default articles if localStorage is empty
         saveArticlesToStorage(DEFAULT_ARTICLES);
-        return DEFAULT_ARTICLES;
+        return DEFAULT_ARTICLES.map((article) => normalizeArticle(article));
       }
 
       // Save articles to localStorage
       function saveArticlesToStorage(articles) {
         localStorage.setItem("articles", JSON.stringify(articles));
+      }
+
+      function normalizeTimestamp(value) {
+        if (value && typeof value.toMillis === "function") {
+          return value.toMillis();
+        }
+        if (value instanceof Date) {
+          return value.getTime();
+        }
+        if (typeof value === "string") {
+          const parsed = Date.parse(value);
+          return Number.isNaN(parsed) ? value : parsed;
+        }
+        return value;
+      }
+
+      function getNormalizedComments(article) {
+        const commentsSource = Array.isArray(article?.comment)
+          ? article.comment
+          : Array.isArray(article?.comments)
+            ? article.comments
+            : [];
+
+        return commentsSource.map((comment) => ({
+          ...comment,
+          createdAt: normalizeTimestamp(comment.createdAt),
+        }));
+      }
+
+      function normalizeArticle(article) {
+        if (!article) {
+          return null;
+        }
+
+        const comments = getNormalizedComments(article);
+        return {
+          ...article,
+          createdAt: normalizeTimestamp(article.createdAt),
+          comment: comments,
+          comments,
+        };
       }
 
       // Load articles from storage on startup
@@ -364,11 +405,11 @@
           state.articles = [];
           querySnapshot.forEach((doc) => {
             const articleData = doc.data();
-            state.articles.push({
+            state.articles.push(normalizeArticle({
               id: doc.id,
               ...articleData,
               createdAt: articleData.createdAt.toMillis ? articleData.createdAt.toMillis() : articleData.createdAt
-            });
+            }));
           });
           
           console.log("Loaded", state.articles.length, "articles from Firestore");
