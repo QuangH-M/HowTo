@@ -9,11 +9,21 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500&family=Dancing+Script:wght@500&display=swap" rel="stylesheet">
     <style>
         :root {
+            --page-scale: 1.1;
             --gold-light: #ead7b0;
             --gold-primary: #9f7528;
             --gold-dark: #6e5018;
             --paper-white: #ffffff;
             --ink-black: #2c2c2c;
+        }
+
+        .page-scale-shell {
+            width: calc(100% / var(--page-scale));
+            min-height: calc(100vh / var(--page-scale));
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            zoom: var(--page-scale);
         }
 
         body {
@@ -132,6 +142,7 @@
     </style>
 </head>
 <body class="p-4 md:p-8">
+    <div class="page-scale-shell">
 
     <div class="notebook-container">
         <!-- Header -->
@@ -178,6 +189,7 @@
         <a href="home.html" class="hover:text-gold-primary transition-colors">Return to Home</a>
         <span class="mx-3">|</span>
         <a href="index.html" class="hover:text-gold-primary transition-colors">Browse Tutorials</a>
+    </div>
     </div>
 
 </body>
