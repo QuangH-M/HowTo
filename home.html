@@ -11,6 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         :root {
+            --page-scale: 1.1;
             --gold-light: #ead7b0;
             --gold-primary: #9f7528;
             --gold-dark: #6e5018;
@@ -18,6 +19,15 @@
             --ink-black: #2c2c2c;
             --red-line: #ff7070;
             --blue-line: #e0e7ff;
+        }
+
+        .page-scale-shell {
+            width: calc(100% / var(--page-scale));
+            min-height: calc(100vh / var(--page-scale));
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            zoom: var(--page-scale);
         }
 
         body {
@@ -204,6 +214,7 @@
     </style>
 </head>
 <body>
+    <div class="page-scale-shell">
 
     <div class="notebook-container">
         <!-- Spiral UI Decoration -->
@@ -265,6 +276,7 @@
                 </div>
             </footer>
         </div>
+    </div>
     </div>
     <script type="module">
         import { initializeApp, getApps } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
